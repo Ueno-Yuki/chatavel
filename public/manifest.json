@@ -1,0 +1,22 @@
+{
+  "name": "Chatavel",
+  "short_name": "Chatavel",
+  "description": "仲間と一緒に最高の旅を計画するアプリ",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f0f0f3",
+  "theme_color": "#667eea",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+@import '../variables.scss';
+
+.modal-stack {
+  position: fixed;
+  right: var(--spacing-lg);
+  bottom: var(--spacing-lg);
+  z-index: var(--z-modal-stack);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  pointer-events: none;
+}
+
+.modal-stack-item {
+  width: 60px;
+  height: 40px;
+  background: var(--accent-gradient);
+  border-radius: 12px;
+  box-shadow: var(--neu-shadow-sm);
+  cursor: pointer;
+  pointer-events: auto;
+  transition: all var(--transition-normal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  user-select: none;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: var(--neu-shadow-md);
+    filter: brightness(1.1);
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.95);
+    filter: brightness(0.95);
+  }
+}
+
+.modal-stack-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.modal-stack-text {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+// レスポンシブ調整
+@media (max-width: $mobile) {
+  .modal-stack {
+    right: var(--spacing-md);
+    bottom: var(--spacing-md);
+  }
+
+  .modal-stack-item {
+    width: 56px;
+    height: 44px; // タッチターゲット確保
+    border-radius: 14px;
+  }
+}
+
+// アニメーション
+.modal-stack-item {
+  animation: stackItemIn 0.3s ease-out;
+}
+
+@keyframes stackItemIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

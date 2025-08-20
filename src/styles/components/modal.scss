@@ -1,0 +1,160 @@
+@import '../variables.scss';
+
+// モーダルオーバーレイ
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  z-index: var(--z-modal-backdrop);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+  opacity: 0;
+  animation: fadeIn var(--transition-slow) ease-out forwards;
+}
+
+// モーダル本体
+.modal {
+  background: var(--secondary-bg);
+  border-radius: 20px;
+  box-shadow: var(--neu-shadow-md);
+  overflow: hidden;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  transform: scale(0.9);
+  opacity: 0;
+  animation: modalIn var(--transition-slow) ease-out forwards;
+
+  &.modal-open {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+// モーダルサイズ
+.modal-small {
+  width: 100%;
+  max-width: 400px;
+}
+
+.modal-medium {
+  width: 100%;
+  max-width: 600px;
+}
+
+.modal-large {
+  width: 100%;
+  max-width: 800px;
+}
+
+.modal-fullscreen {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
+  border-radius: 0;
+}
+
+// モーダルヘッダー
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--shadow-dark);
+  background: var(--primary-bg);
+}
+
+.modal-title {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.modal-controls {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+// モーダルボディ
+.modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-lg);
+  
+  // カスタムスクロールバー
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--shadow-dark);
+    border-radius: 3px;
+    
+    &:hover {
+      background: var(--text-light);
+    }
+  }
+}
+
+// アニメーション
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalIn {
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+// レスポンシブ調整
+@media (max-width: $mobile) {
+  .modal-overlay {
+    padding: var(--spacing-sm);
+  }
+
+  .modal-small,
+  .modal-medium,
+  .modal-large {
+    width: 100%;
+    max-width: none;
+    border-radius: 16px;
+  }
+
+  .modal-header {
+    padding: var(--spacing-md);
+  }
+
+  .modal-body {
+    padding: var(--spacing-md);
+  }
+
+  .modal-title {
+    font-size: var(--font-size-lg);
+  }
+}
+
+// タブレット調整
+@media (max-width: $tablet) {
+  .modal-fullscreen {
+    border-radius: 20px;
+    margin: var(--spacing-md);
+    width: calc(100vw - var(--spacing-2xl));
+    height: calc(100vh - var(--spacing-2xl));
+  }
+}

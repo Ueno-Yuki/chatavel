@@ -1,0 +1,72 @@
+// カラーパレット
+:root {
+  --primary-bg: #f0f0f3;      /* メインの背景色 */
+  --secondary-bg: #ffffff;     /* カードの背景色 */
+  --accent-color: #667eea;     /* アクセントカラー */
+  --accent-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --text-primary: #2c3e50;     /* メインテキスト */
+  --text-secondary: #7f8c8d;   /* サブテキスト */
+  --text-light: #bdc3c7;       /* 薄いテキスト */
+  --shadow-light: #ffffff;     /* ライトシャドウ */
+  --shadow-dark: #d1d9e6;      /* ダークシャドウ */
+}
+
+// ニューモーフィズムシャドウ
+:root {
+  --neu-shadow-sm: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
+  --neu-shadow-md: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+  --neu-inset-sm: inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
+  --neu-inset-md: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light);
+}
+
+// スペーシングシステム
+:root {
+  --spacing-xs: 4px;    /* 8px (タブレット+) */
+  --spacing-sm: 8px;    /* 12px (タブレット+) */
+  --spacing-md: 12px;   /* 16px (タブレット+) */
+  --spacing-lg: 16px;   /* 24px (タブレット+) */
+  --spacing-xl: 24px;   /* 32px (タブレット+) */
+  --spacing-2xl: 32px;  /* 48px (タブレット+) */
+}
+
+// レスポンシブブレークポイント
+$mobile: 767px;
+$tablet: 768px;
+$desktop: 1024px;
+
+// トランジション
+:root {
+  --transition-fast: 0.15s ease-out;    /* ボタンクリック */
+  --transition-normal: 0.25s ease-out;  /* ホバー効果 */
+  --transition-slow: 0.35s ease-out;    /* モーダル表示 */
+}
+
+// フォント設定
+:root {
+  --font-size-sm: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 28px;
+}
+
+// Z-index
+:root {
+  --z-modal-backdrop: 1000;
+  --z-modal: 1001;
+  --z-modal-stack: 999;
+  --z-tooltip: 1002;
+}
+
+// タブレット以上でスペーシング調整
+@media (min-width: $tablet) {
+  :root {
+    --spacing-xs: 8px;
+    --spacing-sm: 12px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    --spacing-2xl: 48px;
+  }
+}

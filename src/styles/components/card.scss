@@ -1,0 +1,51 @@
+@import '../variables.scss';
+
+.neu-card {
+  background: var(--secondary-bg);
+  border-radius: 16px;
+  padding: var(--spacing-lg);
+  box-shadow: var(--neu-shadow-sm);
+  transition: all var(--transition-normal);
+  position: relative;
+  
+  &.cursor-pointer {
+    cursor: pointer;
+    user-select: none;
+    
+    &:focus-visible {
+      outline: 2px solid var(--accent-color);
+      outline-offset: 2px;
+    }
+  }
+}
+
+// ホバー効果
+.neu-card:hover:not(.neu-card-pressed) {
+  transform: translateY(-1px);
+  box-shadow: var(--neu-shadow-md);
+}
+
+// プレス状態
+.neu-card-pressed {
+  box-shadow: var(--neu-inset-sm);
+  transform: translateY(1px);
+}
+
+// カードバリエーション
+.neu-card-flat {
+  box-shadow: none;
+  background: transparent;
+  border: 1px solid var(--shadow-dark);
+}
+
+.neu-card-elevated {
+  box-shadow: var(--neu-shadow-md);
+}
+
+// レスポンシブ調整
+@media (max-width: $mobile) {
+  .neu-card {
+    padding: var(--spacing-md);
+    border-radius: 12px;
+  }
+}
