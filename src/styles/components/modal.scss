@@ -1,4 +1,4 @@
-@import '../variables.scss';
+@use '../variables.scss';
 
 // モーダルオーバーレイ
 .modal-overlay {
@@ -14,27 +14,20 @@
   align-items: center;
   justify-content: center;
   padding: var(--spacing-lg);
-  opacity: 0;
-  animation: fadeIn var(--transition-slow) ease-out forwards;
 }
 
 // モーダル本体
 .modal {
   background: var(--secondary-bg);
   border-radius: 20px;
-  box-shadow: var(--neu-shadow-md);
   overflow: hidden;
   max-height: 90vh;
   display: flex;
   flex-direction: column;
-  transform: scale(0.9);
-  opacity: 0;
-  animation: modalIn var(--transition-slow) ease-out forwards;
-
-  &.modal-open {
-    transform: scale(1);
-    opacity: 1;
-  }
+  transform: scale(1);
+  opacity: 1;
+  z-index: var(--z-modal);
+  position: relative;
 }
 
 // モーダルサイズ
@@ -72,7 +65,7 @@
 }
 
 .modal-title {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-md);
   font-weight: 600;
   color: var(--text-primary);
   margin: 0;
@@ -110,20 +103,27 @@
 
 // アニメーション
 @keyframes fadeIn {
+  from {
+    opacity: 0;
+    background: rgba(0, 0, 0, 0);
+  }
   to {
     opacity: 1;
+    background: rgba(0, 0, 0, 0.3);
   }
 }
 
 @keyframes modalIn {
+  from {
+    transform: scale(0.8);
+  }
   to {
     transform: scale(1);
-    opacity: 1;
   }
 }
 
 // レスポンシブ調整
-@media (max-width: $mobile) {
+@media (max-width: 767px) {
   .modal-overlay {
     padding: var(--spacing-sm);
   }
@@ -150,7 +150,7 @@
 }
 
 // タブレット調整
-@media (max-width: $tablet) {
+@media (max-width: 768px) {
   .modal-fullscreen {
     border-radius: 20px;
     margin: var(--spacing-md);

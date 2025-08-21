@@ -1,4 +1,4 @@
-@import '../variables.scss';
+@use '../variables.scss';
 
 .neu-card {
   background: var(--secondary-bg);
@@ -20,13 +20,15 @@
 }
 
 // ホバー効果
-.neu-card:hover:not(.neu-card-pressed) {
+.neu-card:hover:not(.neu-card-pressed),
+.hover\:neu-card-hover:hover:not(.neu-card-pressed) {
   transform: translateY(-1px);
   box-shadow: var(--neu-shadow-md);
 }
 
 // プレス状態
-.neu-card-pressed {
+.neu-card-pressed,
+.active\:neu-card-pressed:active {
   box-shadow: var(--neu-inset-sm);
   transform: translateY(1px);
 }
@@ -43,7 +45,7 @@
 }
 
 // レスポンシブ調整
-@media (max-width: $mobile) {
+@media (max-width: 767px) {
   .neu-card {
     padding: var(--spacing-md);
     border-radius: 12px;

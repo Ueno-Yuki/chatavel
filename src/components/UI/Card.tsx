@@ -18,7 +18,7 @@ export const Card: React.FC<CardProps> = ({
   pressed = false,
 }) => {
   const baseClasses = 'neu-card transition-all';
-  const interactiveClasses = onClick ? 'cursor-pointer' : '';
+  const interactiveClasses = onClick ? 'cursor-pointer active:neu-card-pressed' : '';
   const hoverClasses = hover && !pressed ? 'hover:neu-card-hover' : '';
   const pressedClasses = pressed ? 'neu-card-pressed' : '';
 

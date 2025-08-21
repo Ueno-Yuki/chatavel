@@ -1,4 +1,4 @@
-@import '../variables.scss';
+@use '../variables.scss';
 
 .modal-stack {
   position: fixed;
@@ -56,7 +56,7 @@
 }
 
 // レスポンシブ調整
-@media (max-width: $mobile) {
+@media (max-width: 767px) {
   .modal-stack {
     right: var(--spacing-md);
     bottom: var(--spacing-md);

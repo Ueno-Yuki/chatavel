@@ -58,7 +58,7 @@ export const Modal: React.FC<ModalProps> = ({
   const modalContent = (
     <div className="modal-overlay" onClick={onClose}>
       <div 
-        className={`modal ${sizeClasses[size]} ${isOpen ? 'modal-open' : ''} ${className}`}
+        className={`modal ${sizeClasses[size]} ${className}`}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="modal-header">
@@ -70,7 +70,7 @@ export const Modal: React.FC<ModalProps> = ({
                 onClick={onMinimize}
                 aria-label="最小化"
               >
-                <Minus size={18} />
+                <Minus size={16} />
               </button>
             )}
             <button
@@ -78,7 +78,7 @@ export const Modal: React.FC<ModalProps> = ({
               onClick={onClose}
               aria-label="閉じる"
             >
-              <X size={18} />
+              <X size={16} />
             </button>
           </div>
         </div>
