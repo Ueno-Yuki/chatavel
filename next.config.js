@@ -1,12 +1,11 @@
-const withPWA = require('next-pwa')({
-  dest: 'public',
-  disable: process.env.NODE_ENV === 'development',
-  register: true,
-  skipWaiting: true,
-});
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  typescript: {
+    ignoreBuildErrors: false,
+  },
+  eslint: {
+    ignoreDuringBuilds: false,
+  },
   images: {
     domains: [
       'tile.openstreetmap.org',
@@ -17,8 +16,8 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
   experimental: {
-    optimizeCss: true,
+    optimizeCss: false,
   },
 };
 
-module.exports = withPWA(nextConfig);
+export default nextConfig;
