@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "@/styles/main.scss";
+import { ViewportProvider } from "@/components/providers/ViewportProvider";
 
 export const metadata: Metadata = {
   title: "Chatavel - 仲間と一緒にチャットしながら旅行計画",
@@ -37,7 +38,9 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
       </head>
       <body>
-        {children}
+        <ViewportProvider>
+          {children}
+        </ViewportProvider>
       </body>
     </html>
   );

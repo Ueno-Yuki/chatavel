@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, MoreHorizontal, Phone, Video, Camera, X } from 'lucide-react';
+import { Send, MoreHorizontal, Phone, Video, Camera, X, ImageIcon } from 'lucide-react';
 import { Button } from '@/components/UI/Button';
 import { Input } from '@/components/UI/Input';
+import Image from 'next/image';
 
 interface ChatMessage {
   id: string;
@@ -47,6 +48,8 @@ export const ChatView: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>(mockMessages);
   const [inputValue, setInputValue] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [extensionContent, setExtensionContent] = useState<React.ReactNode>(null);
+  const [isExtensionOpen, setIsExtensionOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -84,6 +87,35 @@ export const ChatView: React.FC = () => {
   const handleMenuItemClick = (action: string) => {
     console.log(`${action} clicked`);
     setIsMenuOpen(false);
+    
+    // 拡張コンテンツの表示
+    switch (action) {
+      case 'photo':
+        setExtensionContent(<PhotoSelector onSelectPhoto={handlePhotoSelect} onClose={closeExtension} />);
+        setIsExtensionOpen(true);
+        break;
+      case 'voice-call':
+        // 将来の音声通話UI
+        console.log('音声通話機能は今後実装予定');
+        break;
+      case 'video-call':
+        // 将来のビデオ通話UI
+        console.log('ビデオ通話機能は今後実装予定');
+        break;
+    }
+  };
+
+  const handlePhotoSelect = (photo: File) => {
+    // 写真選択時の処理
+    console.log('Selected photo:', photo);
+    // TODO: 実際の写真送信処理を実装
+    setIsExtensionOpen(false);
+    setExtensionContent(null);
+  };
+
+  const closeExtension = () => {
+    setIsExtensionOpen(false);
+    setExtensionContent(null);
   };
 
   const formatTime = (timestamp: Date) => {
@@ -96,7 +128,7 @@ export const ChatView: React.FC = () => {
   return (
     <div className="chat-view">
       {/* チャットヘッダー */}
-      <div className="chat-header flex items-center justify-between p-lg border-b border-shadow-dark">
+      <div className="chat-header sticky flex items-center justify-between border-b border-shadow-dark">
         <div className="flex items-center gap-md">
           <div className="w-10 h-10 rounded-full bg-accent-gradient flex items-center justify-center text-white font-semibold">
             旅
@@ -117,6 +149,11 @@ export const ChatView: React.FC = () => {
               message.sender === 'me' ? 'justify-end' : 'justify-start'
             }`}
           >
+              {message.sender === 'me' && (
+              <div className={`message-time text-xs mt-auto mr-sm opacity-70`}>
+                {formatTime(message.timestamp)}
+              </div>
+              )}
             <div
               className={`message-bubble max-w-xs md:max-w-sm px-md py-sm rounded-2xl ${
                 message.sender === 'me'
@@ -132,20 +169,20 @@ export const ChatView: React.FC = () => {
               <div className="message-text text-md leading-relaxed">
                 {message.text}
               </div>
-              <div
-                className={`message-time text-xs mt-xs opacity-70
-                  ${message.sender === 'other' ? 'text-secondary' : ''} `}
-              >
+            </div>
+            {message.sender === 'other' && (
+              <div className={`message-time text-xs mt-auto ml-sm opacity-70`}>
                 {formatTime(message.timestamp)}
               </div>
-            </div>
+              )}
           </div>
         ))}
         <div ref={messagesEndRef} />
       </div>
 
+
       {/* 入力エリア */}
-      <div className="chat-input border-t border-shadow-dark p-md">
+      <div className="chat-input border-t border-shadow-dark">
         <div className="flex gap-sm items-end">
           <button 
             className="neu-button neu-button-icon"
@@ -207,7 +244,104 @@ export const ChatView: React.FC = () => {
             <div className="menu-text">ビデオ通話</div>
           </div>
         </div>
+        {/* 拡張エリア（写真選択など） */}
+        <div className={`chat-extension-area ${isExtensionOpen ? '' : 'collapsed'}`}>
+          {extensionContent && (
+            <div className="extension-content p-md">
+              <div className="flex justify-between items-center mb-md">
+                <h4 className="font-semibold text-primary">コンテンツを選択</h4>
+                <button
+                  className="neu-button neu-button-icon"
+                  onClick={closeExtension}
+                  aria-label="閉じる"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+              {extensionContent}
+            </div>
+          )}
+        </div>
       </div>
+    </div>
+  );
+};
+
+// 写真選択コンポーネント
+interface PhotoSelectorProps {
+  onSelectPhoto: (photo: File) => void;
+  onClose: () => void;
+}
+
+const PhotoSelector: React.FC<PhotoSelectorProps> = ({ onSelectPhoto, onClose }) => {
+  const [selectedPhotos, setSelectedPhotos] = useState<File[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []);
+    const imageFiles = files.filter(file => file.type.startsWith('image/'));
+    setSelectedPhotos(prev => [...prev, ...imageFiles]);
+  };
+
+  const handlePhotoClick = (photo: File) => {
+    onSelectPhoto(photo);
+  };
+
+  const removePhoto = (index: number) => {
+    setSelectedPhotos(prev => prev.filter((_, i) => i !== index));
+  };
+
+  return (
+    <div className="photo-selector">
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        multiple
+        onChange={handleFileSelect}
+        className="hidden"
+        id="photo-input"
+      />
+      
+      <label
+        htmlFor="photo-input"
+        className="photo-input-label neu-button neu-button-default cursor-pointer"
+      >
+        <ImageIcon size={24} />
+        <span>写真を選択</span>
+      </label>
+
+      {selectedPhotos.length > 0 && (
+        <div className="photo-preview">
+          {selectedPhotos.map((photo, index) => (
+            <div key={index} className="photo-item neu-card">
+              <Image 
+                src={URL.createObjectURL(photo)} 
+                alt={`選択された写真 ${index + 1}`}
+                onClick={() => handlePhotoClick(photo)}
+              />
+              <div className="photo-overlay">
+                <button
+                  className="neu-button neu-button-icon"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    removePhoto(index);
+                  }}
+                  aria-label="写真を削除"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {selectedPhotos.length === 0 && (
+        <p className="text-center text-secondary text-sm mt-md">
+          写真を選択して送信できます
+        </p>
+      )}
     </div>
   );
 };

@@ -1,5 +1,11 @@
 @use '../variables.scss';
 
+// 動的ビューポート高さの初期設定
+:root {
+  --modal-safe-height: calc(100vh - 100px);
+  --modal-mobile-safe-height: calc(100vh - 60px);
+}
+
 // モーダルオーバーレイ
 .modal-overlay {
   position: fixed;
@@ -21,13 +27,15 @@
   background: var(--secondary-bg);
   border-radius: 20px;
   overflow: hidden;
-  max-height: 90vh;
+  max-height: var(--modal-safe-height);
   display: flex;
   flex-direction: column;
   transform: scale(1);
   opacity: 1;
   z-index: var(--z-modal);
   position: relative;
+  height: auto;
+  min-height: 300px;
 }
 
 // モーダルサイズ
@@ -59,7 +67,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--spacing-lg);
+  padding: var(--spacing-sm) var(--spacing-md);
   border-bottom: 1px solid var(--shadow-dark);
   background: var(--primary-bg);
 }
@@ -80,7 +88,7 @@
 .modal-body {
   flex: 1;
   overflow-y: auto;
-  padding: var(--spacing-lg);
+  padding: 0 var(--spacing-md);
   
   // カスタムスクロールバー
   &::-webkit-scrollbar {
@@ -125,7 +133,13 @@
 // レスポンシブ調整
 @media (max-width: 767px) {
   .modal-overlay {
-    padding: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-xs);
+    align-items: flex-start;
+    padding-top: 20px;
+  }
+
+  .modal {
+    max-height: var(--modal-mobile-safe-height);
   }
 
   .modal-small,
@@ -138,10 +152,7 @@
 
   .modal-header {
     padding: var(--spacing-md);
-  }
-
-  .modal-body {
-    padding: var(--spacing-md);
+    flex-shrink: 0;
   }
 
   .modal-title {
