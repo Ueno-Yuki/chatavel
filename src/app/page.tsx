@@ -1,16 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { MapPin, MessageCircle, Calculator, Camera, Users, Plane } from 'lucide-react';
-import { Button } from '@/components/UI/Button';
 import { Card } from '@/components/UI/Card';
 import { Modal } from '@/components/UI/Modal';
 import { ModalStack } from '@/components/UI/ModalStack';
 import { useModal } from '@/hooks/useModal';
+import { ChatView } from '@/components/Chat/ChatView';
 
 export default function Home() {
   const { modals, openModal, closeModal, minimizeModal, restoreModal } = useModal();
-  const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
 
   const features = [
     {
@@ -22,7 +21,7 @@ export default function Home() {
     },
     {
       id: 'chat',
-      title: 'リアルタイムチャット',
+      title: 'チャット',
       description: '仲間とリアルタイムでコミュニケーション',
       icon: MessageCircle,
       color: '#2ecc71',
@@ -58,6 +57,19 @@ export default function Home() {
   ];
 
   const handleFeatureClick = (feature: typeof features[0]) => {
+    // チャット機能の場合は専用コンテンツを表示
+    if (feature.id === 'chat') {
+      openModal({
+        id: feature.id,
+        title: feature.title,
+        content: <ChatView />,
+        icon: <feature.icon size={16} />,
+        size: 'large',
+      });
+      return;
+    }
+
+    // その他の機能は開発中メッセージを表示
     openModal({
       id: feature.id,
       title: feature.title,
@@ -91,61 +103,32 @@ export default function Home() {
       {/* メインコンテンツ */}
       <main className="p-lg max-w-4xl mx-auto">
         {/* 機能カード */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg mb-2xl">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-md md:gap-lg mb-2xl">
           {features.map((feature) => (
             <Card
               key={feature.id}
-              className="p-lg text-center cursor-pointer hover:transform hover:scale-105 transition-transform"
+              className="p-md md:p-lg text-center cursor-pointer hover:transform hover:scale-105 transition-transform"
               onClick={() => handleFeatureClick(feature)}
             >
               <div
-                className="w-16 h-16 mx-auto mb-md rounded-full flex items-center justify-center"
+                className="w-12 h-12 md:w-16 md:h-16 mx-auto mb-sm md:mb-md rounded-full flex items-center justify-center"
                 style={{ backgroundColor: `${feature.color}20` }}
               >
                 <feature.icon 
-                  size={32} 
+                  size={20}
+                  className="md:scale-150"
                   style={{ color: feature.color }}
                 />
               </div>
-              <h3 className="text-lg font-semibold text-primary mb-sm">
+              <h3 className="text-md md:text-lg font-semibold text-primary mb-xs md:mb-sm">
                 {feature.title}
               </h3>
-              <p className="text-sm text-secondary">
+              <p className="text-xs md:text-sm text-secondary">
                 {feature.description}
               </p>
             </Card>
           ))}
         </div>
-
-        {/* デモセクション */}
-        <Card className="p-2xl text-center">
-          <h2 className="text-2xl font-bold text-primary mb-lg">
-            モーダルスタック機能のデモ
-          </h2>
-          <p className="text-secondary mb-lg">
-            複数の機能を同時に開いて、最小化してスタックできます。
-          </p>
-          <div className="flex flex-wrap gap-md justify-center">
-            <Button
-              variant="primary"
-              onClick={() => handleFeatureClick(features[0])}
-            >
-              地図を開く
-            </Button>
-            <Button
-              variant="default"
-              onClick={() => handleFeatureClick(features[1])}
-            >
-              チャットを開く
-            </Button>
-            <Button
-              variant="default"
-              onClick={() => handleFeatureClick(features[2])}
-            >
-              費用管理を開く
-            </Button>
-          </div>
-        </Card>
       </main>
 
       {/* モーダルとスタック */}
@@ -170,39 +153,3 @@ export default function Home() {
     </div>
   );
 }
-
-// スタイルを追加
-const styles = {
-  '.grid': {
-    display: 'grid',
-  },
-  '.grid-cols-1': {
-    gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
-  },
-  '.md\\:grid-cols-2': {
-    '@media (min-width: 768px)': {
-      gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-    },
-  },
-  '.lg\\:grid-cols-3': {
-    '@media (min-width: 1024px)': {
-      gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-    },
-  },
-  '.min-h-screen': {
-    minHeight: '100vh',
-  },
-  '.max-w-4xl': {
-    maxWidth: '56rem',
-  },
-  '.mx-auto': {
-    marginLeft: 'auto',
-    marginRight: 'auto',
-  },
-  '.font-bold': {
-    fontWeight: '700',
-  },
-  '.font-semibold': {
-    fontWeight: '600',
-  },
-};
