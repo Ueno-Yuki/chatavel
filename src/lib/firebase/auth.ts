@@ -232,7 +232,7 @@ export const authService = {
     }
 
     // Firestoreの更新
-    const updateData: any = {};
+    const updateData: Record<string, unknown> = {};
     if (updates.displayName) updateData.displayName = updates.displayName;
     if (updates.photoURL) updateData.photoURL = updates.photoURL;
     if (updates.phoneNumber) updateData.phoneNumber = updates.phoneNumber;
