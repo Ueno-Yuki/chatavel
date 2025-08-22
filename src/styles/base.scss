@@ -201,6 +201,7 @@ body {
 .text-primary { color: var(--text-primary); }
 .text-secondary { color: var(--text-secondary); }
 .text-light { color: var(--text-light); }
+.text-danger { color: var(--text-danger); }
 
 // 背景色
 .bg-primary-bg { background-color: var(--primary-bg); }
@@ -212,6 +213,11 @@ body {
 .border-b { border-bottom-width: 1px; }
 .border-t { border-top-width: 1px; }
 .border-shadow-dark { border-color: var(--shadow-dark); }
+
+// シャドウ
+.neu-shadow-xs { box-shadow: var(--neu-shadow-xs); }
+.neu-shadow-sm { box-shadow: var(--neu-shadow-sm); }
+.neu-shadow-md { box-shadow: var(--neu-shadow-md); }
 
 // その他ユーティリティ
 .leading-relaxed { line-height: 1.625; }

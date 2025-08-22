@@ -7,6 +7,11 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  
+  // モバイルでのビューポート対応
+  @supports (height: 100dvh) {
+    height: 100dvh;
+  }
 }
 
 .chat-header {
@@ -14,6 +19,9 @@
   border-bottom: 1px solid var(--shadow-dark);
   flex-shrink: 0;
   padding: var(--spacing-sm);
+  position: sticky;
+  top: 0;
+  z-index: 20;
   
   .w-10 {
     width: 2.5rem;
@@ -25,6 +33,7 @@
   background: var(--primary-bg);
   flex: 1;
   overflow-y: auto;
+  min-height: 0; // flexアイテムが正しく縮むように設定
   
   // カスタムスクロールバー
   &::-webkit-scrollbar {
@@ -58,6 +67,7 @@
   position: relative;
   word-wrap: break-word;
   transition: all var(--transition-fast);
+  box-shadow: var(--neu-shadow-xs);
   
   &:hover {
     transform: translateY(-1px);
@@ -75,12 +85,12 @@
   content: '';
   position: absolute;
   top: 8px;
-  right: -6px;
+  right: -8px;
   width: 0;
   height: 0;
-  border-left: 8px solid var(--accent-color);
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
+  border-left: 12px solid var(--accent-color);
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
   z-index: 1;
 }
 
@@ -89,12 +99,12 @@
   content: '';
   position: absolute;
   top: 8px;
-  left: -6px;
+  left: -8px;
   width: 0;
   height: 0;
-  border-right: 8px solid var(--secondary-bg);
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
+  border-right: 12px solid var(--secondary-bg);
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
   z-index: 1;
 }
 
@@ -102,26 +112,26 @@
 .message-bubble-mine::after {
   content: '';
   position: absolute;
-  top: 9px;
-  right: -5px;
+  top: 10px;
+  right: -7px;
   width: 0;
   height: 0;
-  border-left: 6px solid rgba(200, 208, 224, 0.3);
-  border-top: 6px solid transparent;
-  border-bottom: 6px solid transparent;
+  border-left: 10px solid rgba(200, 208, 224, 0.3);
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
   z-index: 0;
 }
 
 .message-bubble-other::after {
   content: '';
   position: absolute;
-  top: 9px;
-  left: -5px;
+  top: 10px;
+  left: -7px;
   width: 0;
   height: 0;
-  border-right: 6px solid rgba(200, 208, 224, 0.3);
-  border-top: 6px solid transparent;
-  border-bottom: 6px solid transparent;
+  border-right: 10px solid rgba(200, 208, 224, 0.3);
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
   z-index: 0;
 }
 
@@ -134,6 +144,12 @@
   background: var(--secondary-bg);
   flex-shrink: 0;
   border-top: 1px solid var(--shadow-dark);
+  padding: var(--spacing-md);
+  
+  // 固定フッターとして設定
+  position: sticky;
+  bottom: 0;
+  z-index: 15;
   
   .chat-input-field {
     resize: none;
@@ -277,7 +293,6 @@
     justify-content: center;
     gap: var(--spacing-sm);
     min-height: 80px;
-    border: 2px dashed var(--shadow-dark);
     border-radius: 12px;
     transition: all var(--transition-fast);
     
@@ -347,16 +362,29 @@
 // レスポンシブ調整
 @media (max-width: 767px) {
   .chat-header {
-    padding: 0 var(--spacing-sm) var(--spacing-sm);
+    padding: var(--spacing-sm);
     flex-shrink: 0;
+    top: 0;
+    z-index: 20;
   }
   
   .chat-messages {
     padding: var(--spacing-sm);
+    // モバイルでのスクロール領域を明確化
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
   
   .chat-input {
-    padding-top: var(--spacing-md);
+    padding: var(--spacing-sm);
+    
+    // モバイルでキーボード表示時の安全エリア確保
+    padding-bottom: max(var(--spacing-sm), env(safe-area-inset-bottom));
+    
+    // モバイルでも固定フッター
+    position: sticky;
+    bottom: 0;
+    z-index: 15;
   }
   
   .chat-extension-area {
@@ -369,36 +397,36 @@
   }
   
   .message-bubble {
-    max-width: 280px;
-    font-size: var(--font-size-sm);
+    max-width: 320px;
+    font-size: var(--font-size-md);
     
-    // モバイルでは尻尾を小さく
+    // モバイルでは尻尾を少し小さく
     &.message-bubble-mine::before {
-      border-left-width: 6px;
-      border-top-width: 6px;
-      border-bottom-width: 6px;
-      right: -4px;
+      border-left-width: 10px;
+      border-top-width: 10px;
+      border-bottom-width: 10px;
+      right: -6px;
     }
     
     &.message-bubble-other::before {
-      border-right-width: 6px;
-      border-top-width: 6px;
-      border-bottom-width: 6px;
-      left: -4px;
+      border-right-width: 10px;
+      border-top-width: 10px;
+      border-bottom-width: 10px;
+      left: -6px;
     }
     
     &.message-bubble-mine::after {
-      border-left-width: 4px;
-      border-top-width: 4px;
-      border-bottom-width: 4px;
-      right: -3px;
+      border-left-width: 8px;
+      border-top-width: 8px;
+      border-bottom-width: 8px;
+      right: -5px;
     }
     
     &.message-bubble-other::after {
-      border-right-width: 4px;
-      border-top-width: 4px;
-      border-bottom-width: 4px;
-      left: -3px;
+      border-right-width: 8px;
+      border-top-width: 8px;
+      border-bottom-width: 8px;
+      left: -5px;
     }
   }
 
