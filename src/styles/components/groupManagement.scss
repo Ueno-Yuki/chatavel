@@ -1,0 +1,298 @@
+@use '../variables.scss';
+
+.group-management-view {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+// タブナビゲーション
+.tab-navigation {
+  background: var(--secondary-bg);
+  box-shadow: inset 6px 6px 12px color-mix(in srgb, var(--shadow-dark) 50%, transparent), inset -4px -4px 8px color-mix(in srgb, var(--shadow-light) 90%, transparent);
+  border-radius: 12px;
+  padding: var(--spacing-xs);
+  margin-top: var(--spacing-xs);
+  display: inline-flex;
+  width: fit-content;
+  
+  .tab-button {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: none;
+    background: var(--secondary-bg);
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    border-radius: 8px;
+    
+    &:hover {
+      color: var(--text-primary);
+      box-shadow: 4px 4px 8px color-mix(in srgb, var(--shadow-dark) 60%, transparent), -4px -4px 8px color-mix(in srgb, var(--shadow-light) 80%, transparent);
+    }
+    
+    &:active {
+      box-shadow: inset 1px 1px 2px color-mix(in srgb, var(--shadow-dark) 40%, transparent);
+    }
+    
+    &.active {
+      color: var(--accent-color);
+    }
+  }
+}
+
+// メンバー管理
+.members-tab {
+  margin-bottom: var(--spacing-md);
+
+  .member-item {
+    transition: all var(--transition-fast);
+    
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--neu-shadow-sm);
+    }
+  }
+  
+  .member-avatar {
+    position: relative;
+    
+    .online-indicator {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 14px;
+      height: 14px;
+      background: var(--color-success);
+      border: 2px solid var(--secondary-bg);
+      border-radius: 50%;
+    }
+  }
+  
+  .member-info {
+    flex: 1;
+  }
+  
+  .member-actions {
+    .role-select {
+      min-width: 100px;
+      padding: var(--spacing-xs) var(--spacing-sm);
+      font-size: var(--font-size-sm);
+    }
+    
+    .danger-btn {
+      padding: var(--spacing-xs);
+      min-width: auto;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      &:hover {
+        box-shadow: var(--neu-inset-sm);
+        transform: translateY(1px);
+      }
+      
+      &:active {
+        box-shadow: var(--neu-inset-md);
+        transform: translateY(2px);
+      }
+    }
+  }
+  
+  .owner-badge {
+    background: var(--primary-bg);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    box-shadow: var(--neu-shadow-sm);
+    border-radius: 12px;
+  }
+}
+
+// 招待機能
+.invite-tab {
+  .invite-by-email,
+  .invite-link {
+    h4 {
+      margin-bottom: var(--spacing-sm);
+    }
+    
+    .flex {
+      align-items: stretch;
+      
+      input {
+        border-radius: 8px 0 0 8px;
+      }
+      
+      button {
+        border-radius: 0 8px 8px 0;
+        
+        &:hover {
+          box-shadow: var(--neu-inset-sm);
+          transform: translateY(1px);
+        }
+        
+        &:active {
+          box-shadow: var(--neu-inset-md);
+          transform: translateY(2px);
+        }
+      }
+    }
+  }
+}
+
+// 設定
+.settings-tab {
+  .setting-item {
+    border: 1px solid var(--shadow-dark);
+    
+    &.border-red-200 {
+      border-color: color-mix(in srgb, var(--color-danger) 30%, transparent);
+      background: color-mix(in srgb, var(--color-danger) 2%, transparent);
+    }
+    
+    label {
+      display: block;
+      margin-bottom: var(--spacing-xs);
+    }
+    
+    textarea {
+      font-family: inherit;
+      line-height: 1.5;
+    }
+  }
+  
+  .setting-option {
+    label {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      cursor: pointer;
+      margin-bottom: 0;
+      
+      &:hover {
+        color: var(--accent-color);
+      }
+    }
+  }
+}
+
+// チェックボックス
+.neu-checkbox {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 2px solid var(--shadow-dark);
+  background: var(--secondary-bg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  
+  &:checked {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+  }
+  
+  &:hover {
+    border-color: var(--accent-color);
+  }
+}
+
+// 危険なボタン - ニューモーフィズムデザイン（背景色は変更せず文字色のみ）
+.neu-button.danger-btn {
+  color: var(--text-danger);
+  
+  &:hover {
+    color: var(--text-danger);
+    box-shadow: var(--neu-inset-sm);
+    transform: translateY(1px);
+  }
+  
+  &:active {
+    color: var(--text-danger);
+    box-shadow: var(--neu-inset-md);
+    transform: translateY(2px);
+  }
+}
+
+.neu-button.warning-btn {
+  color: var(--text-warning);
+  
+  &:hover {
+    color: var(--text-warning);
+    box-shadow: var(--neu-inset-sm);
+    transform: translateY(1px);
+  }
+  
+  &:active {
+    color: var(--text-warning);
+    box-shadow: var(--neu-inset-md);
+    transform: translateY(2px);
+  }
+}
+
+// スペーシング
+.space-y-sm > * + * {
+  margin-top: var(--spacing-sm);
+}
+
+.space-y-md > * + * {
+  margin-top: var(--spacing-md);
+}
+
+// レスポンシブ調整
+@media (max-width: 767px) {
+  .group-management-view {
+    padding: 0 var(--spacing-sm);
+  }
+  
+  .tab-navigation {
+    .tab-button {
+      padding: var(--spacing-sm);
+      font-size: 12px;
+      
+      span {
+        display: none;
+      }
+    }
+  }
+  
+  .member-item {
+    .member-actions {
+      flex-direction: column;
+      gap: var(--spacing-xs);
+      
+      .role-select {
+        min-width: 80px;
+        font-size: 12px;
+      }
+    }
+  }
+  
+  .invite-tab {
+    .flex {
+      flex-direction: column;
+      
+      input, button {
+        border-radius: 8px !important;
+        border: 2px solid var(--shadow-dark) !important;
+      }
+      
+      button {
+        margin-top: var(--spacing-xs);
+      }
+    }
+  }
+  
+  .settings-tab {
+    .setting-item {
+      .flex {
+        flex-direction: column;
+        gap: var(--spacing-xs);
+      }
+    }
+  }
+}
