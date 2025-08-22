@@ -50,7 +50,9 @@ export const ChatView: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [extensionContent, setExtensionContent] = useState<React.ReactNode>(null);
   const [isExtensionOpen, setIsExtensionOpen] = useState(false);
+  const [isInputFocused, setIsInputFocused] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -59,6 +61,23 @@ export const ChatView: React.FC = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // モバイルキーボード表示時の対応
+  useEffect(() => {
+    const handleResize = () => {
+      if (isInputFocused && inputRef.current) {
+        // キーボード表示時にインプットを画面内に保持
+        setTimeout(() => {
+          inputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 300);
+      }
+    };
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
+  }, [isInputFocused]);
 
   const handleSendMessage = () => {
     if (inputValue.trim()) {
@@ -155,10 +174,10 @@ export const ChatView: React.FC = () => {
               </div>
               )}
             <div
-              className={`message-bubble max-w-xs md:max-w-sm px-md py-sm rounded-2xl ${
+              className={`message-bubble max-w-sm md:max-w-md px-lg py-md rounded-2xl ${
                 message.sender === 'me'
-                  ? 'neu-card rounded-br-md message-mine message-bubble-mine'
-                  : 'neu-card text-primary rounded-bl-md message-bubble-other'
+                  ? 'rounded-br-md message-mine message-bubble-mine'
+                  : 'text-primary rounded-bl-md message-bubble-other'
               }`}
             >
               {message.sender === 'other' && message.senderName && (
@@ -193,9 +212,12 @@ export const ChatView: React.FC = () => {
           </button>
           <div className="flex-1">
             <Input
+              ref={inputRef}
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={handleKeyDown}
+              onFocus={() => setIsInputFocused(true)}
+              onBlur={() => setIsInputFocused(false)}
               placeholder="メッセージを入力..."
               className="chat-input-field"
             />

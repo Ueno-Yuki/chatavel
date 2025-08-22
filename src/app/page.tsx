@@ -7,6 +7,7 @@ import { Modal } from '@/components/UI/Modal';
 import { ModalStack } from '@/components/UI/ModalStack';
 import { useModal } from '@/hooks/useModal';
 import { ChatView } from '@/components/Chat/ChatView';
+import { GroupManagementView } from '@/components/Group/GroupManagementView';
 
 export default function Home() {
   const { modals, openModal, closeModal, minimizeModal, restoreModal } = useModal();
@@ -63,6 +64,18 @@ export default function Home() {
         id: feature.id,
         title: feature.title,
         content: <ChatView />,
+        icon: <feature.icon size={16} />,
+        size: 'large',
+      });
+      return;
+    }
+
+    // グループ管理機能の場合は専用コンテンツを表示
+    if (feature.id === 'group') {
+      openModal({
+        id: feature.id,
+        title: feature.title,
+        content: <GroupManagementView groupName="沖縄旅行" groupId="okinawa-trip-2024" />,
         icon: <feature.icon size={16} />,
         size: 'large',
       });
