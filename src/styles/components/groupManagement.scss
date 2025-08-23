@@ -406,7 +406,7 @@
 
 .danger-actions {
   display: flex;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-md);
 }
 
 .group-danger-btn {
@@ -565,6 +565,6 @@
   /* 設定タブの調整 */
   .danger-actions {
     flex-direction: column;
-    gap: var(--spacing-xs);
+    gap: var(--spacing-lg);
   }
 }

@@ -168,32 +168,41 @@ export const ChatView: React.FC = () => {
               message.sender === 'me' ? 'message-right' : 'message-left'
             }`}
           >
-              {message.sender === 'me' && (
-              <div className={`message-time time-right`}>
-                {formatTime(message.timestamp)}
-              </div>
-              )}
-            {message.sender === 'other' && message.senderName && (
-              <div className="sender-name">
-                {message.senderName}
+            {message.sender === 'me' ? (
+              // 自分のメッセージ
+              <>
+                <div className="message-time time-right">
+                  {formatTime(message.timestamp)}
+                </div>
+                <div className="message-bubble message-bubble-mine">
+                  <div className="message-text">
+                    {message.text}
+                  </div>
+                </div>
+              </>
+            ) : (
+              // 他の人のメッセージ
+              <div className="other-message-container">
+                {message.senderName && (
+                  <div className="sender-name">
+                    {message.senderName}
+                  </div>
+                )}
+                <div className="other-message-content">
+                  <div className="other-avatar">
+                    {message.senderName?.charAt(0) || '?'}
+                  </div>
+                  <div className="message-bubble message-bubble-other">
+                    <div className="message-text">
+                      {message.text}
+                    </div>
+                  </div>
+                  <div className="message-time time-left">
+                    {formatTime(message.timestamp)}
+                  </div>
+                </div>
               </div>
             )}
-            <div
-              className={`message-bubble ${
-                message.sender === 'me'
-                  ? 'message-mine message-bubble-mine'
-                  : 'message-bubble-other'
-              }`}
-            >
-              <div className="message-text">
-                {message.text}
-              </div>
-            </div>
-            {message.sender === 'other' && (
-              <div className={`message-time time-left`}>
-                {formatTime(message.timestamp)}
-              </div>
-              )}
           </div>
         ))}
         <div ref={messagesEndRef} />
@@ -273,7 +282,7 @@ export const ChatView: React.FC = () => {
               <div className="extension-header">
                 <h4 className="extension-title">コンテンツを選択</h4>
                 <button
-                  className="neu-button extension-close-button"
+                  className="neu-button neu-button-icon"
                   onClick={closeExtension}
                   aria-label="閉じる"
                 >

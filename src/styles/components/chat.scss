@@ -108,11 +108,40 @@
   }
 }
 
+.other-message-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
 .sender-name {
   font-size: var(--font-size-xs);
   color: var(--text-secondary);
   margin-bottom: var(--spacing-xs);
+  margin-left: 44px; /* アバター幅 + gap分のマージン */
   font-weight: 500;
+}
+
+.other-message-content {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  width: 100%;
+}
+
+.other-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  flex-shrink: 0;
 }
 
 .message-bubble {
@@ -205,15 +234,14 @@
 
 .message-time {
   font-size: var(--font-size-xs);
-  margin-top: auto var(--spacing-sm);
   opacity: 0.7;
   
   &.time-right {
-    margin-right: var(--spacing-sm);
+    align-self: flex-end;
   }
   
   &.time-left {
-    margin-left: var(--spacing-sm);
+    align-self: flex-end;
   }
 }
 
@@ -258,6 +286,10 @@
     opacity: 0.5;
     cursor: not-allowed;
   }
+
+  &:enabled {
+    cursor: pointer;
+  }
 }
 
 .menu-toggle-button {
@@ -284,6 +316,9 @@
     opacity: 1;
     max-height: 100px;
     padding-bottom: var(--spacing-md);
+    align-items: center;
+    position: relative;
+    left: -7px
   }
 }
 
@@ -296,8 +331,8 @@
 }
 
 .menu-item-button {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: var(--secondary-bg);
   box-shadow: var(--neu-shadow-sm);
@@ -311,8 +346,8 @@
   padding: 0;
   
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--neu-shadow-md);
+    transform: translateY(1px);
+    box-shadow: var(--neu-shadow-xs);
   }
 
   &:active {
@@ -396,7 +431,29 @@
 }
 
 .extension-close-button {
-  padding: var(--spacing-xs);
+  background: var(--secondary-bg);
+  color: var(--text-primary);
+  box-shadow: var(--neu-shadow-sm);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  
+  &:hover {
+    box-shadow: var(--neu-inset-sm);
+    transform: translateY(1px);
+  }
+  
+  &:active {
+    box-shadow: var(--neu-inset-md);
+    transform: translateY(2px);
+  }
 }
 
 /* ============================
@@ -410,6 +467,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: var(--neu-shadow-md);
   gap: var(--spacing-sm);
   min-height: 80px;
   border-radius: 12px;
@@ -418,10 +476,12 @@
   
   &:hover {
     border-color: var(--accent-color);
-    background: rgba(102, 126, 234, 0.05);
+    box-shadow: var(--neu-shadow-xs);
+    transform: translate(-1px);
   }
-  
+
   &:active {
+    box-shadow: var(--neu-inset-sm);
     transform: scale(0.98);
   }
 }
@@ -521,6 +581,16 @@
   .photo-input-label {
     min-height: 60px;
     font-size: var(--font-size-sm);
+  }
+  
+  .other-avatar {
+    width: var(--spacing-2xl);
+    height: var(--spacing-2xl);
+    font-size: var(--font-size-md);
+  }
+  
+  .sender-name {
+    margin-left: 36px; /* モバイル時のアバター幅 + gap */
   }
   
   .message-bubble {
