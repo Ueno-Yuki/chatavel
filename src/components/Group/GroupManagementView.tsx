@@ -120,8 +120,8 @@ export const GroupManagementView: React.FC<GroupManagementViewProps> = ({
   return (
     <div className="group-management-view">
       {/* タブナビゲーション */}
-      <div className="tab-navigation mb-md">
-        <div className="flex border-b gap-xs border-shadow-dark">
+      <div className="tab-navigation">
+        <div className="flex">
           <button
             onClick={() => setActiveTab('members')}
             className={`tab-button ${activeTab === 'members' ? 'active' : ''}`}
@@ -149,20 +149,20 @@ export const GroupManagementView: React.FC<GroupManagementViewProps> = ({
       {/* メンバータブ */}
       {activeTab === 'members' && (
         <div className="members-tab">
-          <div className="members-header mb-md">
-            <h3 className="text-lg font-semibold text-primary">
+          <div className="members-header">
+            <h3 className="invite-section-title">
               メンバー ({members.length})
             </h3>
           </div>
 
-          <div className="members-list space-y-sm">
+          <div className="members-list">
             {members.map((member) => (
-              <div key={member.id} className="member-item neu-card p-md">
+              <div key={member.id} className="member-item neu-card p-md space-y-sm">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-md">
                     {/* アバター */}
                     <div className="member-avatar">
-                      <div className="w-12 h-12 rounded-full bg-accent-gradient flex items-center justify-center text-white font-semibold">
+                      <div className="avatar-circle">
                         {member.name.charAt(0)}
                       </div>
                       {member.isOnline && (
@@ -172,12 +172,12 @@ export const GroupManagementView: React.FC<GroupManagementViewProps> = ({
 
                     {/* メンバー情報 */}
                     <div className="member-info">
-                      <div className="flex items-center gap-xs mb-xs">
-                        <h4 className="font-semibold text-primary">{member.name}</h4>
+                      <div className="member-name">
+                        <span>{member.name}</span>
                         {getRoleIcon(member.role)}
                       </div>
-                      <p className="text-sm text-secondary">{member.email}</p>
-                      <p className="text-xs text-light">
+                      <p className="member-email">{member.email}</p>
+                      <p className="member-joined">
                         {member.joinedAt.toLocaleDateString('ja-JP')} に参加
                       </p>
                     </div>
@@ -185,25 +185,25 @@ export const GroupManagementView: React.FC<GroupManagementViewProps> = ({
 
                   {/* アクション */}
                   {member.role !== 'owner' && (
-                    <div className="member-actions flex gap-xs">
+                    <div className="member-actions">
                       <select
                         value={member.role}
                         onChange={(e) => handleRoleChange(member.id, e.target.value as 'admin' | 'member')}
-                        className="role-select neu-input text-sm"
+                        className="role-select neu-input"
                       >
                         <option value="member">メンバー</option>
                         <option value="admin">管理者</option>
                       </select>
                       <button
                         onClick={() => handleShowDeleteConfirm(member.id)}
-                        className="neu-button neu-button-icon danger-btn"
+                        className="neu-button danger-btn"
                       >
                         <X size={14} />
                       </button>
                     </div>
                   )}
                   {member.role === 'owner' && (
-                    <span className="owner-badge text-xs font-medium">
+                    <span className="owner-badge">
                       {getRoleLabel(member.role)}
                     </span>
                   )}
@@ -211,21 +211,21 @@ export const GroupManagementView: React.FC<GroupManagementViewProps> = ({
                 
                 {/* 削除確認メッセージ */}
                 {confirmingDelete === member.id && (
-                  <div className="delete-confirmation mt-sm">
-                    <div className="confirmation-content neu-card-inset p-sm">
-                      <p className="text-sm text-danger mb-sm">
+                  <div className="delete-confirmation">
+                    <div className="confirmation-content">
+                      <p className="confirmation-message">
                         本当に{member.name}をグループから削除しますか？
                       </p>
-                      <div className="confirmation-actions flex gap-xs justify-end">
+                      <div className="confirmation-actions">
                         <button
                           onClick={handleCancelDelete}
-                          className="neu-button neu-button-sm cancel-btn"
+                          className="neu-button confirmation-button cancel-btn"
                         >
                           キャンセル
                         </button>
                         <button
                           onClick={() => handleConfirmDelete(member.id)}
-                          className="neu-button neu-button-sm danger-btn"
+                          className="neu-button confirmation-button danger-btn"
                         >
                           削除
                         </button>
@@ -242,11 +242,11 @@ export const GroupManagementView: React.FC<GroupManagementViewProps> = ({
       {/* 招待タブ */}
       {activeTab === 'invite' && (
         <div className="invite-tab">
-          <div className="invite-section mb-lg">
-            <h3 className="text-lg font-semibold text-primary mb-md">メンバーを招待</h3>
+          <div className="invite-section">
+            <h3 className="invite-section-title">メンバーを招待</h3>
             
             {/* メールで招待 */}
-            <div className="neu-card p-md mb-md">
+            <div className="invite-card">
               <h4 className="invite-title">
                 <Mail size={18} />
                 メールアドレスで招待
@@ -257,7 +257,7 @@ export const GroupManagementView: React.FC<GroupManagementViewProps> = ({
                   placeholder="example@email.com"
                   value={inviteEmail}
                   onChange={(e) => setInviteEmail(e.target.value)}
-                  className="invite-input"
+                  className="invite-input member-input"
                 />
                 <Button
                   variant="primary"
@@ -271,19 +271,19 @@ export const GroupManagementView: React.FC<GroupManagementViewProps> = ({
             </div>
 
             {/* 招待リンク */}
-            <div className="neu-card p-md">
+            <div className="invite-card">
               <h4 className="invite-title">
                 <Copy size={18} />
                 招待リンク
               </h4>
-              <p className="text-sm text-secondary mb-sm">
+              <p className="invite-description">
                 このリンクを共有して、メンバーをグループに招待できます
               </p>
               <div className="invite-form">
                 <Input
                   value={`https://chatavel.app/join/${groupId}`}
                   readOnly
-                  className="invite-input"
+                  className="invite-input member-input"
                 />
                 <Button
                   variant="default"
@@ -302,88 +302,91 @@ export const GroupManagementView: React.FC<GroupManagementViewProps> = ({
       {/* 設定タブ */}
       {activeTab === 'settings' && (
         <div className="settings-tab">
-          <h3 className="text-lg font-semibold text-primary mb-md">グループ設定</h3>
-          
-          <div className="settings-form space-y-md">
-            {/* グループ名 */}
-            <div className="setting-item neu-card p-md">
-              <label className="block text-sm font-medium text-primary mb-xs">
-                グループ名
-              </label>
-              <Input
-                value={groupSettings.name}
-                onChange={(e) => setGroupSettings(prev => ({ ...prev, name: e.target.value }))}
-              />
+          <div className="settings-section">
+            <h3 className="settings-title">グループ設定</h3>
+            
+            <div className="settings-form">
+              {/* グループ名 */}
+              <div className="setting-item setting-card">
+                <label className="setting-label">
+                  グループ名
+                </label>
+                <Input
+                  value={groupSettings.name}
+                  onChange={(e) => setGroupSettings(prev => ({ ...prev, name: e.target.value }))}
+                  className="member-input"
+                />
             </div>
 
-            {/* 説明 */}
-            <div className="setting-item neu-card p-md">
-              <label className="block text-sm font-medium text-primary mb-xs">
-                グループ説明
-              </label>
-              <textarea
-                value={groupSettings.description}
-                onChange={(e) => setGroupSettings(prev => ({ ...prev, description: e.target.value }))}
-                className="neu-input w-full h-20 resize-none"
-                placeholder="グループの説明を入力..."
-              />
+              {/* 説明 */}
+              <div className="setting-item setting-card">
+                <label className="setting-label">
+                  グループ説明
+                </label>
+                <textarea
+                  value={groupSettings.description}
+                  onChange={(e) => setGroupSettings(prev => ({ ...prev, description: e.target.value }))}
+                  className="setting-textarea member-input"
+                  placeholder="グループの説明を入力..."
+                />
             </div>
 
-            {/* 権限設定 */}
-            <div className="setting-item neu-card p-md">
-              <h4 className="font-semibold text-primary mb-sm">権限設定</h4>
+              {/* 権限設定 */}
+              <div className="setting-item setting-card">
+                <h4 className="setting-label">権限設定</h4>
               
-              <div className="setting-option mb-sm">
-                <label className="flex items-center gap-sm cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={groupSettings.allowMemberInvite}
-                    onChange={(e) => setGroupSettings(prev => ({ 
-                      ...prev, 
-                      allowMemberInvite: e.target.checked 
-                    }))}
-                    className="neu-checkbox"
-                  />
-                  <span className="text-sm text-primary">
-                    メンバーが他のユーザーを招待できる
-                  </span>
-                </label>
-              </div>
+                <div className="setting-option">
+                  <label className="setting-option-label">
+                    <input
+                      type="checkbox"
+                      checked={groupSettings.allowMemberInvite}
+                      onChange={(e) => setGroupSettings(prev => ({ 
+                        ...prev, 
+                        allowMemberInvite: e.target.checked 
+                      }))}
+                      className="neu-checkbox"
+                    />
+                    <span>
+                      メンバーが他のユーザーを招待できる
+                    </span>
+                  </label>
+                </div>
 
-              <div className="setting-option">
-                <label className="flex items-center gap-sm cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={groupSettings.isPublic}
-                    onChange={(e) => setGroupSettings(prev => ({ 
-                      ...prev, 
-                      isPublic: e.target.checked 
-                    }))}
-                    className="neu-checkbox"
-                  />
-                  <span className="text-sm text-primary">
-                    パブリックグループにする
-                  </span>
-                </label>
-                <p className="text-xs text-secondary mt-xs ml-lg">
-                  パブリックグループは検索結果に表示され、誰でも参加申請できます
-                </p>
-              </div>
+                <div className="setting-option">
+                  <label className="setting-option-label">
+                    <input
+                      type="checkbox"
+                      checked={groupSettings.isPublic}
+                      onChange={(e) => setGroupSettings(prev => ({ 
+                        ...prev, 
+                        isPublic: e.target.checked 
+                      }))}
+                      className="neu-checkbox"
+                    />
+                    <span>
+                      パブリックグループにする
+                    </span>
+                  </label>
+                  <p className="setting-option-description">
+                    パブリックグループは検索結果に表示され、誰でも参加申請できます
+                  </p>
+                </div>
             </div>
 
-            {/* 危険な操作 */}
-            <div className="setting-item neu-card p-md border border-red-200">
-              <h4 className="font-semibold text-red-600 mb-sm">危険な操作</h4>
-              <p className="text-sm text-secondary mb-md">
-                以下の操作は取り消せません。慎重に実行してください。
-              </p>
-              <div className="flex gap-sm">
-                <Button variant="default" size="sm" className="danger-btn">
-                  グループを削除
-                </Button>
-                <Button variant="default" size="sm" className="warning-btn">
-                  グループを退出
-                </Button>
+              {/* 危険な操作 */}
+              <div className="setting-item setting-card danger-setting">
+                <h4 className="danger-section-title">危険な操作</h4>
+                <p className="danger-section-description">
+                  以下の操作は取り消せません。慎重に実行してください。
+                </p>
+                <div className="danger-actions">
+                  <Button variant="default" size="sm" className="danger-btn">
+                    グループを削除
+                  </Button>
+                  <Button variant="default" size="sm" className="warning-btn">
+                    グループを退出
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
