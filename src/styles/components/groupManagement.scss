@@ -113,34 +113,37 @@
   }
 }
 
-// 招待機能
-.invite-tab {
-  .invite-by-email,
-  .invite-link {
-    h4 {
-      margin-bottom: var(--spacing-sm);
+// 招待機能 - デスクトップ
+.invite-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.invite-form {
+  display: flex;
+  align-items: stretch;
+  gap: var(--spacing-sm);
+  
+  .invite-input {
+    flex: 1;
+    border-radius: 8px 0 0 8px;
+  }
+  
+  .invite-button {
+    border-radius: 0 8px 8px 0;
+    
+    &:hover {
+      box-shadow: var(--neu-inset-sm);
+      transform: translateY(1px);
     }
     
-    .flex {
-      align-items: stretch;
-      
-      input {
-        border-radius: 8px 0 0 8px;
-      }
-      
-      button {
-        border-radius: 0 8px 8px 0;
-        
-        &:hover {
-          box-shadow: var(--neu-inset-sm);
-          transform: translateY(1px);
-        }
-        
-        &:active {
-          box-shadow: var(--neu-inset-md);
-          transform: translateY(2px);
-        }
-      }
+    &:active {
+      box-shadow: var(--neu-inset-md);
+      transform: translateY(2px);
     }
   }
 }
@@ -201,6 +204,12 @@
   }
 }
 
+.neu-button.cancel-btn {
+  &:hover {
+    transform: translate(1px);
+  }
+}
+
 // 危険なボタン - ニューモーフィズムデザイン（背景色は変更せず文字色のみ）
 .neu-button.danger-btn {
   color: var(--text-danger);
@@ -234,6 +243,37 @@
   }
 }
 
+// 削除確認メッセージ
+.delete-confirmation {
+  .confirmation-content {
+    background: var(--secondary-bg);
+    box-shadow: var(--neu-inset-sm);
+    border-radius: 8px;
+    padding: var(--spacing-md);
+
+    .text-danger {
+      color: var(--text-danger);
+    }
+    
+    .confirmation-actions {
+      margin-bottom: var(--spacing-xs);
+      gap: var(--spacing-lg);
+
+      .neu-button-sm {
+        padding: var(--spacing-xs);
+        box-shadow: var(--neu-shadow-sm);
+        font-size: var(--font-size-sm);
+        border-radius: 6px;
+        background: #e8ecf0;
+      }
+
+      .neu-button-sm:hover {
+        box-shadow: var(--neu-inset-sm);
+      }
+    }
+  }
+}
+
 // スペーシング
 .space-y-sm > * + * {
   margin-top: var(--spacing-sm);
@@ -245,13 +285,10 @@
 
 // レスポンシブ調整
 @media (max-width: 767px) {
-  .group-management-view {
-    padding: 0 var(--spacing-sm);
-  }
   
   .tab-navigation {
     .tab-button {
-      padding: var(--spacing-sm);
+      margin: var(--spacing-xs);
       font-size: 12px;
       
       span {
@@ -259,11 +296,23 @@
       }
     }
   }
+
+  .members-tab {
+    .member-actions {
+      .danger-btn {
+        width: 24px;
+        height: 24px;
+        min-height: auto;
+      }
+    }
+  }
   
   .member-item {
     .member-actions {
-      flex-direction: column;
+      flex-direction: row;
       gap: var(--spacing-xs);
+      align-items: center;
+      align-self: flex-start;
       
       .role-select {
         min-width: 80px;
@@ -271,19 +320,25 @@
       }
     }
   }
+
+  .delete-confirmation .confirmation-content .confirmation-actions .neu-button-sm {
+    font-size: var(--font-size-xs);
+    min-height: var(--spacing-2xl);
+    padding: 0 var(--spacing-xs);
+  }
   
-  .invite-tab {
-    .flex {
-      flex-direction: column;
-      
-      input, button {
-        border-radius: 8px !important;
-        border: 2px solid var(--shadow-dark) !important;
-      }
-      
-      button {
-        margin-top: var(--spacing-xs);
-      }
+  // モバイル時の招待フォーム
+  .invite-form {
+    flex-direction: column;
+    align-items: stretch;
+    
+    .invite-input {
+      border-radius: 8px;
+      margin-bottom: var(--spacing-xs);
+    }
+    
+    .invite-button {
+      border-radius: 8px;
     }
   }
   

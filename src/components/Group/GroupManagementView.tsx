@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Users, UserPlus, Settings, Crown, Shield, X, Copy, Mail, Phone } from 'lucide-react';
+import { Users, UserPlus, Settings, Crown, Shield, X, Copy, Mail } from 'lucide-react';
 import { Button } from '@/components/UI/Button';
 import { Input } from '@/components/UI/Input';
 
@@ -54,6 +54,7 @@ export const GroupManagementView: React.FC<GroupManagementViewProps> = ({
   const [members, setMembers] = useState<GroupMember[]>(mockMembers);
   const [activeTab, setActiveTab] = useState<'members' | 'settings' | 'invite'>('members');
   const [inviteEmail, setInviteEmail] = useState('');
+  const [confirmingDelete, setConfirmingDelete] = useState<string | null>(null);
   const [groupSettings, setGroupSettings] = useState({
     name: groupName,
     description: '沖縄旅行のグループです',
@@ -61,8 +62,17 @@ export const GroupManagementView: React.FC<GroupManagementViewProps> = ({
     allowMemberInvite: true,
   });
 
-  const handleRemoveMember = (memberId: string) => {
+  const handleShowDeleteConfirm = (memberId: string) => {
+    setConfirmingDelete(memberId);
+  };
+
+  const handleCancelDelete = () => {
+    setConfirmingDelete(null);
+  };
+
+  const handleConfirmDelete = (memberId: string) => {
     setMembers(prev => prev.filter(member => member.id !== memberId));
+    setConfirmingDelete(null);
   };
 
   const handleRoleChange = (memberId: string, newRole: 'admin' | 'member') => {
@@ -111,7 +121,7 @@ export const GroupManagementView: React.FC<GroupManagementViewProps> = ({
     <div className="group-management-view">
       {/* タブナビゲーション */}
       <div className="tab-navigation mb-md">
-        <div className="flex border-b border-shadow-dark">
+        <div className="flex border-b gap-xs border-shadow-dark">
           <button
             onClick={() => setActiveTab('members')}
             className={`tab-button ${activeTab === 'members' ? 'active' : ''}`}
@@ -185,7 +195,7 @@ export const GroupManagementView: React.FC<GroupManagementViewProps> = ({
                         <option value="admin">管理者</option>
                       </select>
                       <button
-                        onClick={() => handleRemoveMember(member.id)}
+                        onClick={() => handleShowDeleteConfirm(member.id)}
                         className="neu-button neu-button-icon danger-btn"
                       >
                         <X size={14} />
@@ -198,6 +208,31 @@ export const GroupManagementView: React.FC<GroupManagementViewProps> = ({
                     </span>
                   )}
                 </div>
+                
+                {/* 削除確認メッセージ */}
+                {confirmingDelete === member.id && (
+                  <div className="delete-confirmation mt-sm">
+                    <div className="confirmation-content neu-card-inset p-sm">
+                      <p className="text-sm text-danger mb-sm">
+                        本当に{member.name}をグループから削除しますか？
+                      </p>
+                      <div className="confirmation-actions flex gap-xs justify-end">
+                        <button
+                          onClick={handleCancelDelete}
+                          className="neu-button neu-button-sm cancel-btn"
+                        >
+                          キャンセル
+                        </button>
+                        <button
+                          onClick={() => handleConfirmDelete(member.id)}
+                          className="neu-button neu-button-sm danger-btn"
+                        >
+                          削除
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -211,23 +246,24 @@ export const GroupManagementView: React.FC<GroupManagementViewProps> = ({
             <h3 className="text-lg font-semibold text-primary mb-md">メンバーを招待</h3>
             
             {/* メールで招待 */}
-            <div className="invite-by-email neu-card p-md mb-md">
-              <h4 className="font-semibold text-primary mb-sm flex items-center gap-xs">
+            <div className="neu-card p-md mb-md">
+              <h4 className="invite-title">
                 <Mail size={18} />
                 メールアドレスで招待
               </h4>
-              <div className="flex gap-sm">
+              <div className="invite-form">
                 <Input
                   type="email"
                   placeholder="example@email.com"
                   value={inviteEmail}
                   onChange={(e) => setInviteEmail(e.target.value)}
-                  className="flex-1"
+                  className="invite-input"
                 />
                 <Button
                   variant="primary"
                   onClick={handleInviteByEmail}
                   disabled={!inviteEmail.trim()}
+                  className="invite-button"
                 >
                   招待送信
                 </Button>
@@ -235,23 +271,24 @@ export const GroupManagementView: React.FC<GroupManagementViewProps> = ({
             </div>
 
             {/* 招待リンク */}
-            <div className="invite-link neu-card p-md">
-              <h4 className="font-semibold text-primary mb-sm flex items-center gap-xs">
+            <div className="neu-card p-md">
+              <h4 className="invite-title">
                 <Copy size={18} />
                 招待リンク
               </h4>
               <p className="text-sm text-secondary mb-sm">
                 このリンクを共有して、メンバーをグループに招待できます
               </p>
-              <div className="flex gap-sm">
+              <div className="invite-form">
                 <Input
                   value={`https://chatavel.app/join/${groupId}`}
                   readOnly
-                  className="flex-1"
+                  className="invite-input"
                 />
                 <Button
                   variant="default"
                   onClick={copyInviteLink}
+                  className="invite-button"
                 >
                   <Copy size={16} />
                   コピー

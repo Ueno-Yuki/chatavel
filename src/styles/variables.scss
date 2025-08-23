@@ -13,15 +13,15 @@
   --color-danger: #ef4444;     /* 危険色 */
   --color-warning: #eab308;    /* 警告色 */
   --shadow-light: #ffffff;     /* ライトシャドウ */
-  --shadow-dark: #c8d0e0;      /* ダークシャドウ */
+  --shadow-dark: #c1c4c9;      /* ダークシャドウ */
 }
 
 // ニューモーフィズムシャドウ
 :root {
   --neu-shadow-xs: 3px 3px 8px var(--shadow-dark), -2px -2px 6px var(--shadow-light);
-  --neu-shadow-sm: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+  --neu-shadow-sm: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
   --neu-shadow-md: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
-  --neu-inset-sm: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light);
+  --neu-inset-sm: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
   --neu-inset-md: inset 8px 8px 16px var(--shadow-dark), inset -8px -8px 16px var(--shadow-light);
 }
 
@@ -49,6 +49,7 @@ $desktop: 1024px;
 
 // フォント設定
 :root {
+  --font-size-xs: 10px;
   --font-size-sm: 14px;
   --font-size-md: 16px;
   --font-size-lg: 18px;
