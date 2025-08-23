@@ -1,0 +1,155 @@
+@use '../variables.scss';
+
+/* ============================
+ * ホームページ - 基本レイアウト
+ * ============================ */
+.homepage {
+  min-height: 100vh;
+  background: var(--primary-bg);
+}
+
+/* ============================
+ * ヘッダーセクション
+ * ============================ */
+.homepage-header {
+  padding: var(--spacing-lg);
+  text-align: center;
+}
+
+.homepage-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.homepage-subtitle {
+  font-size: var(--font-size-lg);
+  color: var(--text-secondary);
+}
+
+/* ============================
+ * メインコンテンツ
+ * ============================ */
+.homepage-main {
+  padding: var(--spacing-lg);
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-2xl);
+}
+
+/* ============================
+ * 機能カード
+ * ============================ */
+.feature-card {
+  text-align: center;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.feature-card-content {
+  background: var(--primary-bg);
+  box-shadow: var(--neu-shadow-sm);
+  border-radius: 12px;
+  padding: var(--spacing-md);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto var(--spacing-sm);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-title {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.feature-description {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* ============================
+ * モーダル内開発中メッセージ
+ * ============================ */
+.dev-message {
+  padding: var(--spacing-lg);
+}
+
+.dev-message-description {
+  font-size: var(--font-size-lg);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-md);
+}
+
+.dev-message-text {
+  font-size: var(--font-size-md);
+  color: var(--text-primary);
+}
+
+/* ============================
+ * レスポンシブ - モバイル対応
+ * ============================ */
+@media (min-width: 480px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+  }
+}
+
+@media (min-width: 768px) {
+  .homepage-main {
+    max-width: 1024px;
+  }
+  
+  .features-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+  }
+  
+  .feature-card-content {
+    padding: var(--spacing-lg);
+  }
+  
+  .feature-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: var(--spacing-md);
+    
+    svg {
+      transform: scale(1.5);
+    }
+  }
+  
+  .feature-title {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .feature-description {
+    font-size: var(--font-size-sm);
+  }
+}

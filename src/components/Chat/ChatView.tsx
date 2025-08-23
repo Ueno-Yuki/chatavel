@@ -147,50 +147,50 @@ export const ChatView: React.FC = () => {
   return (
     <div className="chat-view">
       {/* チャットヘッダー */}
-      <div className="chat-header sticky flex items-center justify-between border-b border-shadow-dark">
-        <div className="flex items-center gap-md">
-          <div className="w-10 h-10 rounded-full bg-accent-gradient flex items-center justify-center text-white font-semibold">
+      <div className="chat-header">
+        <div className="chat-header-info">
+          <div className="chat-avatar">
             旅
           </div>
-          <div className="flex gap-md items-center">
-            <h4 className="font-semibold text-primary">沖縄旅行</h4>
-            <p className="text-sm text-secondary">3人のメンバー</p>
+          <div className="chat-group-info">
+            <h4 className="chat-group-name">沖縄旅行</h4>
+            <p className="chat-member-count">3人のメンバー</p>
           </div>
         </div>
       </div>
 
       {/* メッセージエリア */}
-      <div className="chat-messages p-md">
+      <div className="chat-messages">
         {messages.map((message) => (
           <div
             key={message.id}
-            className={`message-wrapper mb-md flex ${
-              message.sender === 'me' ? 'justify-end' : 'justify-start'
+            className={`message-wrapper ${
+              message.sender === 'me' ? 'message-right' : 'message-left'
             }`}
           >
               {message.sender === 'me' && (
-              <div className={`message-time text-xs mt-auto mr-sm opacity-70`}>
+              <div className={`message-time time-right`}>
                 {formatTime(message.timestamp)}
               </div>
               )}
+            {message.sender === 'other' && message.senderName && (
+              <div className="sender-name">
+                {message.senderName}
+              </div>
+            )}
             <div
-              className={`message-bubble max-w-sm md:max-w-md px-lg py-md rounded-2xl ${
+              className={`message-bubble ${
                 message.sender === 'me'
-                  ? 'rounded-br-md message-mine message-bubble-mine'
-                  : 'text-primary rounded-bl-md message-bubble-other'
+                  ? 'message-mine message-bubble-mine'
+                  : 'message-bubble-other'
               }`}
             >
-              {message.sender === 'other' && message.senderName && (
-                <div className="sender-name text-xs text-secondary mb-xs font-medium">
-                  {message.senderName}
-                </div>
-              )}
-              <div className="message-text text-md leading-relaxed">
+              <div className="message-text">
                 {message.text}
               </div>
             </div>
             {message.sender === 'other' && (
-              <div className={`message-time text-xs mt-auto ml-sm opacity-70`}>
+              <div className={`message-time time-left`}>
                 {formatTime(message.timestamp)}
               </div>
               )}
@@ -201,8 +201,8 @@ export const ChatView: React.FC = () => {
 
 
       {/* 入力エリア */}
-      <div className="chat-input border-t border-shadow-dark">
-        <div className="flex gap-sm items-end">
+      <div className="chat-input">
+        <div className="chat-input-controls">
           <button 
             className="neu-button neu-button-icon"
             aria-label={isMenuOpen ? "メニューを閉じる" : "メニューを開く"}
@@ -210,7 +210,7 @@ export const ChatView: React.FC = () => {
           >
             {isMenuOpen ? <X size={18} /> : <MoreHorizontal size={18} />}
           </button>
-          <div className="flex-1">
+          <div className="chat-input-wrapper">
             <Input
               ref={inputRef}
               value={inputValue}
@@ -234,7 +234,7 @@ export const ChatView: React.FC = () => {
         </div>
         
         {/* メニューアイテム */}
-        <div className={`modal-menu-items ${isMenuOpen ? 'visible' : ''} mt-xs`}>
+        <div className={`chat-menu-items ${isMenuOpen ? 'visible' : ''}`}>
           <div className="menu-item-wrapper">
             <button 
               aria-label="写真"
@@ -269,11 +269,11 @@ export const ChatView: React.FC = () => {
         {/* 拡張エリア（写真選択など） */}
         <div className={`chat-extension-area ${isExtensionOpen ? '' : 'collapsed'}`}>
           {extensionContent && (
-            <div className="extension-content p-md">
-              <div className="flex justify-between items-center mb-md">
-                <h4 className="font-semibold text-primary">コンテンツを選択</h4>
+            <div className="extension-content">
+              <div className="extension-header">
+                <h4 className="extension-title">コンテンツを選択</h4>
                 <button
-                  className="neu-button neu-button-icon"
+                  className="neu-button extension-close-button"
                   onClick={closeExtension}
                   aria-label="閉じる"
                 >
@@ -327,7 +327,7 @@ const PhotoSelector: React.FC<PhotoSelectorProps> = ({ onSelectPhoto, onClose })
       
       <label
         htmlFor="photo-input"
-        className="photo-input-label neu-button neu-button-default cursor-pointer"
+        className="photo-input-label neu-button"
       >
         <ImageIcon size={24} />
         <span>写真を選択</span>
@@ -336,7 +336,7 @@ const PhotoSelector: React.FC<PhotoSelectorProps> = ({ onSelectPhoto, onClose })
       {selectedPhotos.length > 0 && (
         <div className="photo-preview">
           {selectedPhotos.map((photo, index) => (
-            <div key={index} className="photo-item neu-card">
+            <div key={index} className="photo-item">
               <Image 
                 src={URL.createObjectURL(photo)} 
                 alt={`選択された写真 ${index + 1}`}
@@ -344,7 +344,7 @@ const PhotoSelector: React.FC<PhotoSelectorProps> = ({ onSelectPhoto, onClose })
               />
               <div className="photo-overlay">
                 <button
-                  className="neu-button neu-button-icon"
+                  className="neu-button"
                   onClick={(e) => {
                     e.stopPropagation();
                     removePhoto(index);
@@ -360,7 +360,7 @@ const PhotoSelector: React.FC<PhotoSelectorProps> = ({ onSelectPhoto, onClose })
       )}
 
       {selectedPhotos.length === 0 && (
-        <p className="text-center text-secondary text-sm mt-md">
+        <p className="photo-empty-state">
           写真を選択して送信できます
         </p>
       )}

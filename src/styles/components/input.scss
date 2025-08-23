@@ -18,9 +18,9 @@
   }
 
   &:focus {
-    outline: 2px solid var(--accent-color);
+    outline: none;
     outline-offset: -2px;
-    box-shadow: var(--neu-inset-sm), 0 0 0 2px var(--accent-color);
+    box-shadow: var(--neu-inset-focus);
   }
 
   &:disabled {

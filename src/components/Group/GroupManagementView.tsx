@@ -225,7 +225,7 @@ export const GroupManagementView: React.FC<GroupManagementViewProps> = ({
                         </button>
                         <button
                           onClick={() => handleConfirmDelete(member.id)}
-                          className="neu-button confirmation-button danger-btn"
+                          className="neu-button confirmation-button confirm-danger-btn"
                         >
                           削除
                         </button>
@@ -380,7 +380,7 @@ export const GroupManagementView: React.FC<GroupManagementViewProps> = ({
                   以下の操作は取り消せません。慎重に実行してください。
                 </p>
                 <div className="danger-actions">
-                  <Button variant="default" size="sm" className="danger-btn">
+                  <Button variant="default" size="sm" className="group-danger-btn">
                     グループを削除
                   </Button>
                   <Button variant="default" size="sm" className="warning-btn">

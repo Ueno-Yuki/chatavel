@@ -1,5 +1,8 @@
 @use '../variables.scss';
 
+/* ============================
+ * チャットビュー - 基本レイアウト
+ * ============================ */
 .chat-view {
   background: var(--primary-bg);
   height: 100%;
@@ -8,12 +11,14 @@
   flex-direction: column;
   overflow: hidden;
   
-  // モバイルでのビューポート対応
   @supports (height: 100dvh) {
     height: 100dvh;
   }
 }
 
+/* ============================
+ * チャットヘッダー
+ * ============================ */
 .chat-header {
   background: var(--secondary-bg);
   border-bottom: 1px solid var(--shadow-dark);
@@ -22,20 +27,55 @@
   position: sticky;
   top: 0;
   z-index: 20;
-  
-  .w-10 {
-    width: 2.5rem;
-    height: 2.5rem;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
+.chat-header-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.chat-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.chat-group-info {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+}
+
+.chat-group-name {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.chat-member-count {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+/* ============================
+ * メッセージエリア
+ * ============================ */
 .chat-messages {
   background: var(--primary-bg);
   flex: 1;
   overflow-y: auto;
-  min-height: 0; // flexアイテムが正しく縮むように設定
+  min-height: 0;
+  padding: var(--spacing-md);
   
-  // カスタムスクロールバー
   &::-webkit-scrollbar {
     width: 6px;
   }
@@ -56,11 +96,23 @@
 
 .message-wrapper {
   animation: messageIn 0.3s ease-out;
+  display: flex;
+  margin-bottom: var(--spacing-md);
+  
+  &.message-right {
+    justify-content: flex-end;
+  }
+  
+  &.message-left {
+    justify-content: flex-start;
+  }
 }
 
-.message-mine {
-  background: var(--accent-color);
-  color: var(--secondary-bg);
+.sender-name {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-xs);
+  font-weight: 500;
 }
 
 .message-bubble {
@@ -68,11 +120,13 @@
   word-wrap: break-word;
   transition: all var(--transition-fast);
   box-shadow: var(--neu-shadow-xs);
+  max-width: 384px;
+  padding: var(--spacing-lg) var(--spacing-lg);
+  border-radius: 16px;
   
   &:hover {
     transform: translateY(-1px);
     
-    // ホバー時に尻尾も一緒に動く
     &::before,
     &::after {
       transform: translateY(-1px);
@@ -80,100 +134,143 @@
   }
 }
 
-// 自分のメッセージの吹き出し（右上に尻尾）
-.message-bubble-mine::before {
-  content: '';
-  position: absolute;
-  top: 8px;
-  right: -8px;
-  width: 0;
-  height: 0;
-  border-left: 12px solid var(--accent-color);
-  border-top: 12px solid transparent;
-  border-bottom: 12px solid transparent;
-  z-index: 1;
+.message-bubble-mine {
+  background: var(--accent-color);
+  color: var(--secondary-bg);
+  border-bottom-right-radius: 8px;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    right: -8px;
+    width: 0;
+    height: 0;
+    border-left: 12px solid var(--accent-color);
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    z-index: 1;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: -7px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid rgba(200, 208, 224, 0.3);
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    z-index: 0;
+  }
 }
 
-// 他の人のメッセージの吹き出し（左上に尻尾）
-.message-bubble-other::before {
-  content: '';
-  position: absolute;
-  top: 8px;
-  left: -8px;
-  width: 0;
-  height: 0;
-  border-right: 12px solid var(--secondary-bg);
-  border-top: 12px solid transparent;
-  border-bottom: 12px solid transparent;
-  z-index: 1;
+.message-bubble-other {
+  background: var(--secondary-bg);
+  color: var(--text-primary);
+  border-bottom-left-radius: 8px;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: -8px;
+    width: 0;
+    height: 0;
+    border-right: 12px solid var(--secondary-bg);
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    z-index: 1;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: -7px;
+    width: 0;
+    height: 0;
+    border-right: 10px solid rgba(200, 208, 224, 0.3);
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    z-index: 0;
+  }
 }
 
-// ニューモーフィズムシャドウを考慮した影の尻尾
-.message-bubble-mine::after {
-  content: '';
-  position: absolute;
-  top: 10px;
-  right: -7px;
-  width: 0;
-  height: 0;
-  border-left: 10px solid rgba(200, 208, 224, 0.3);
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  z-index: 0;
+.message-text {
+  font-size: var(--font-size-md);
+  line-height: 1.6;
 }
 
-.message-bubble-other::after {
-  content: '';
-  position: absolute;
-  top: 10px;
-  left: -7px;
-  width: 0;
-  height: 0;
-  border-right: 10px solid rgba(200, 208, 224, 0.3);
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  z-index: 0;
+.message-time {
+  font-size: var(--font-size-xs);
+  margin-top: auto var(--spacing-sm);
+  opacity: 0.7;
+  
+  &.time-right {
+    margin-right: var(--spacing-sm);
+  }
+  
+  &.time-left {
+    margin-left: var(--spacing-sm);
+  }
 }
 
-// 背景色の定義
-.bg-accent-gradient {
-  background: var(--accent-gradient);
-}
-
+/* ============================
+ * 入力エリア
+ * ============================ */
 .chat-input {
   background: var(--secondary-bg);
   flex-shrink: 0;
   border-top: 1px solid var(--shadow-dark);
   padding: var(--spacing-md);
-  
-  // 固定フッターとして設定
   position: sticky;
   bottom: 0;
   z-index: 15;
+}
+
+.chat-input-controls {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+
+.chat-input-wrapper {
+  flex: 1;
+}
+
+.chat-input-field {
+  resize: none;
+  min-height: 44px;
+  max-height: 120px;
+  border-radius: 20px;
+  padding: var(--spacing-sm) var(--spacing-lg);
+}
+
+.send-button {
+  min-width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  padding: 0;
   
-  .chat-input-field {
-    resize: none;
-    min-height: 44px;
-    max-height: 120px;
-    border-radius: 20px;
-    padding: var(--spacing-sm) var(--spacing-lg);
-  }
-  
-  .send-button {
-    min-width: 44px;
-    height: 44px;
-    border-radius: 22px;
-    padding: 0;
-    
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }
 
-// メニューアイテム
-.modal-menu-items {
+.menu-toggle-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-sm);
+}
+
+/* ============================
+ * メニューアイテム
+ * ============================ */
+.chat-menu-items {
   display: flex;
   gap: var(--spacing-md);
   opacity: 0;
@@ -188,60 +285,62 @@
     max-height: 100px;
     padding-bottom: var(--spacing-md);
   }
+}
 
-  .menu-item-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-xs);
-    min-width: 60px;
-    
-    .menu-item-button {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--secondary-bg);
-      box-shadow: var(--neu-shadow-sm);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all var(--transition-fast);
-      border: none;
-      cursor: pointer;
-      outline: none;
-      padding: 0;
-      
-      &:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--neu-shadow-md);
-      }
+.menu-item-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+  min-width: 60px;
+}
 
-      &:active {
-        transform: translateY(0);
-        box-shadow: var(--neu-inset-sm);
-      }
-      
-      svg {
-        color: var(--text-primary);
-      }
-    }
-    
-    .menu-text {
-      font-size: var(--font-size-sm);
-      color: var(--text-secondary);
-      text-align: center;
-      white-space: nowrap;
-      font-weight: 500;
-      line-height: 1.2;
-    }
+.menu-item-button {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--secondary-bg);
+  box-shadow: var(--neu-shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--neu-shadow-md);
+  }
 
-    &:hover .menu-text {
-      color: var(--text-primary);
-    }
+  &:active {
+    transform: translateY(0);
+    box-shadow: var(--neu-inset-sm);
+  }
+  
+  svg {
+    color: var(--text-primary);
   }
 }
 
-// 拡張エリア（写真選択、ファイル共有など）
+.menu-text {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  text-align: center;
+  white-space: nowrap;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.menu-item-wrapper:hover .menu-text {
+  color: var(--text-primary);
+}
+
+/* ============================
+ * 拡張エリア
+ * ============================ */
 .chat-extension-area {
   background: var(--primary-bg);
   border-top: 1px solid var(--shadow-dark);
@@ -250,23 +349,12 @@
   overflow-y: auto;
   transition: all var(--transition-normal);
   
-  // 折りたたみ状態
   &.collapsed {
     max-height: 0;
     border-top-width: 0;
     overflow: hidden;
   }
   
-  .extension-content {
-    opacity: 1;
-    transition: opacity var(--transition-normal);
-  }
-  
-  &.collapsed .extension-content {
-    opacity: 0;
-  }
-  
-  // カスタムスクロールバー
   &::-webkit-scrollbar {
     width: 6px;
   }
@@ -285,69 +373,118 @@
   }
 }
 
-// 写真選択エリア
+.extension-content {
+  opacity: 1;
+  transition: opacity var(--transition-normal);
+  padding: var(--spacing-md);
+}
+
+.chat-extension-area.collapsed .extension-content {
+  opacity: 0;
+}
+
+.extension-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.extension-title {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.extension-close-button {
+  padding: var(--spacing-xs);
+}
+
+/* ============================
+ * 写真選択コンポーネント
+ * ============================ */
 .photo-selector {
-  .photo-input-label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--spacing-sm);
-    min-height: 80px;
-    border-radius: 12px;
-    transition: all var(--transition-fast);
-    
-    &:hover {
-      border-color: var(--accent-color);
-      background: rgba(102, 126, 234, 0.05);
-    }
-    
-    &:active {
-      transform: scale(0.98);
-    }
+  width: 100%;
+}
+
+.photo-input-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  min-height: 80px;
+  border-radius: 12px;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  
+  &:hover {
+    border-color: var(--accent-color);
+    background: rgba(102, 126, 234, 0.05);
   }
   
-  .photo-preview {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-    gap: var(--spacing-sm);
-    margin-top: var(--spacing-md);
-    
-    .photo-item {
-      position: relative;
-      aspect-ratio: 1;
-      border-radius: 8px;
-      overflow: hidden;
-      cursor: pointer;
-      
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      
-      .photo-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        transition: opacity var(--transition-fast);
-        color: white;
-      }
-      
-      &:hover .photo-overlay {
-        opacity: 1;
-      }
-    }
+  &:active {
+    transform: scale(0.98);
   }
 }
 
-// メッセージアニメーション
+.photo-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+}
+
+.photo-item {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--primary-bg);
+  box-shadow: var(--neu-shadow-sm);
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.photo-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  color: white;
+}
+
+.photo-item:hover .photo-overlay {
+  opacity: 1;
+}
+
+.photo-empty-state {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-md);
+}
+
+/* ============================
+ * ユーティリティクラス
+ * ============================ */
+.hidden {
+  display: none;
+}
+
+/* ============================
+ * アニメーション
+ * ============================ */
 @keyframes messageIn {
   from {
     opacity: 0;
@@ -359,48 +496,38 @@
   }
 }
 
-// レスポンシブ調整
+/* ============================
+ * レスポンシブ - モバイル対応
+ * ============================ */
 @media (max-width: 767px) {
   .chat-header {
     padding: var(--spacing-sm);
-    flex-shrink: 0;
-    top: 0;
-    z-index: 20;
   }
   
   .chat-messages {
     padding: var(--spacing-sm);
-    // モバイルでのスクロール領域を明確化
-    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
   
   .chat-input {
     padding: var(--spacing-sm);
-    
-    // モバイルでキーボード表示時の安全エリア確保
     padding-bottom: max(var(--spacing-sm), env(safe-area-inset-bottom));
-    
-    // モバイルでも固定フッター
-    position: sticky;
-    bottom: 0;
-    z-index: 15;
   }
   
   .chat-extension-area {
-    max-height: 35vh; // モバイルでは少し小さく
+    max-height: 35vh;
   }
   
-  .photo-selector .photo-input-label {
+  .photo-input-label {
     min-height: 60px;
     font-size: var(--font-size-sm);
   }
   
   .message-bubble {
-    max-width: 320px;
-    font-size: var(--font-size-md);
+    max-width: 280px;
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-md);
     
-    // モバイルでは尻尾を少し小さく
     &.message-bubble-mine::before {
       border-left-width: 10px;
       border-top-width: 10px;
@@ -430,25 +557,25 @@
     }
   }
 
-  .modal-menu-items {
+  .chat-menu-items {
     gap: var(--spacing-sm);
+  }
 
-    .menu-item-wrapper {
-      min-width: 50px;
-      
-      .menu-item-button {
-        width: 40px;
-        height: 40px;
-        
-        svg {
-          width: 16px;
-          height: 16px;
-        }
-      }
-      
-      .menu-text {
-        font-size: 12px;
-      }
+  .menu-item-wrapper {
+    min-width: 50px;
+  }
+
+  .menu-item-button {
+    width: 40px;
+    height: 40px;
+    
+    svg {
+      width: 16px;
+      height: 16px;
     }
+  }
+  
+  .menu-text {
+    font-size: 12px;
   }
 }

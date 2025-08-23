@@ -63,7 +63,7 @@ export const Modal: React.FC<ModalProps> = ({
       >
         <div className="modal-header">
           <h2 className="modal-title">{title}</h2>
-          <div className="modal-controls flex gap-sm">
+          <div className="modal-controls">
             {onMinimize && (
               <button
                 className="neu-button neu-button-icon"

@@ -2,12 +2,12 @@
 
 import React from 'react';
 import { MapPin, MessageCircle, Calculator, Camera, Users, Plane } from 'lucide-react';
-import { Card } from '@/components/UI/Card';
 import { Modal } from '@/components/UI/Modal';
 import { ModalStack } from '@/components/UI/ModalStack';
 import { useModal } from '@/hooks/useModal';
 import { ChatView } from '@/components/Chat/ChatView';
 import { GroupManagementView } from '@/components/Group/GroupManagementView';
+import '@/styles/components/homepage.scss';
 
 export default function Home() {
   const { modals, openModal, closeModal, minimizeModal, restoreModal } = useModal();
@@ -87,11 +87,11 @@ export default function Home() {
       id: feature.id,
       title: feature.title,
       content: (
-        <div className="p-lg">
-          <p className="text-lg text-secondary mb-md">
+        <div className="dev-message">
+          <p className="dev-message-description">
             {feature.description}
           </p>
-          <p className="text-md">
+          <p className="dev-message-text">
             この機能は開発中です。完成をお楽しみに！
           </p>
         </div>
@@ -102,44 +102,45 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-primary-bg">
+    <div className="homepage">
       {/* ヘッダー */}
-      <header className="p-lg text-center">
-        <h1 className="text-3xl font-bold text-primary mb-sm">
+      <header className="homepage-header">
+        <h1 className="homepage-title">
           Chatavel
         </h1>
-        <p className="text-lg text-secondary">
+        <p className="homepage-subtitle">
           仲間と一緒にチャットしながら旅行計画
         </p>
       </header>
 
       {/* メインコンテンツ */}
-      <main className="p-lg max-w-4xl mx-auto">
+      <main className="homepage-main">
         {/* 機能カード */}
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-md md:gap-lg mb-2xl">
+        <div className="features-grid">
           {features.map((feature) => (
-            <Card
+            <div
               key={feature.id}
-              className="p-md md:p-lg text-center cursor-pointer hover:transform hover:scale-105 transition-transform"
+              className="feature-card"
               onClick={() => handleFeatureClick(feature)}
             >
-              <div
-                className="w-12 h-12 md:w-16 md:h-16 mx-auto mb-sm md:mb-md rounded-full flex items-center justify-center"
-                style={{ backgroundColor: `${feature.color}20` }}
-              >
-                <feature.icon 
-                  size={20}
-                  className="md:scale-150"
-                  style={{ color: feature.color }}
-                />
+              <div className="feature-card-content">
+                <div
+                  className="feature-icon"
+                  style={{ backgroundColor: `${feature.color}20` }}
+                >
+                  <feature.icon 
+                    size={20}
+                    style={{ color: feature.color }}
+                  />
+                </div>
+                <h3 className="feature-title">
+                  {feature.title}
+                </h3>
+                <p className="feature-description">
+                  {feature.description}
+                </p>
               </div>
-              <h3 className="text-md md:text-lg font-semibold text-primary mb-xs md:mb-sm">
-                {feature.title}
-              </h3>
-              <p className="text-xs md:text-sm text-secondary">
-                {feature.description}
-              </p>
-            </Card>
+            </div>
           ))}
         </div>
       </main>
