@@ -39,7 +39,7 @@
   border-radius: 12px;
 
   &:hover:not(.disabled) {
-    box-shadow: var(--neu-inset-sm);
+    box-shadow: var(--neu-shadow-xs);
     transform: translateY(1px);
   }
 

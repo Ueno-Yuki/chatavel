@@ -22,8 +22,8 @@
 // ホバー効果
 .neu-card:hover:not(.neu-card-pressed),
 .hover\:neu-card-hover:hover:not(.neu-card-pressed) {
-  transform: translateY(-1px);
-  box-shadow: var(--neu-shadow-md);
+  transform: translateY(2px);
+  box-shadow: var(--neu-shadow-xs);
 }
 
 // プレス状態
@@ -47,7 +47,7 @@
 // レスポンシブ調整
 @media (max-width: 767px) {
   .neu-card {
-    padding: var(--spacing-md);
+    padding: var(--spacing-sm);
     border-radius: 12px;
   }
 }

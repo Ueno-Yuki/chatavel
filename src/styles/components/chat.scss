@@ -72,7 +72,6 @@
 .chat-messages {
   background: var(--primary-bg);
   flex: 1;
-  overflow-y: auto;
   min-height: 0;
   padding: var(--spacing-md);
   
@@ -101,6 +100,7 @@
   
   &.message-right {
     justify-content: flex-end;
+    gap: var(--spacing-xs);
   }
   
   &.message-left {
@@ -119,7 +119,7 @@
   font-size: var(--font-size-xs);
   color: var(--text-secondary);
   margin-bottom: var(--spacing-xs);
-  margin-left: 44px; /* アバター幅 + gap分のマージン */
+  margin-left: 50px; /* アバター幅 + gap分のマージン */
   font-weight: 500;
 }
 
@@ -147,14 +147,15 @@
 .message-bubble {
   position: relative;
   word-wrap: break-word;
-  transition: all var(--transition-fast);
-  box-shadow: var(--neu-shadow-xs);
+  transition: all var(--transition-normal);
+  box-shadow: var(--neu-shadow-sm);
   max-width: 384px;
-  padding: var(--spacing-lg) var(--spacing-lg);
+  padding: var(--spacing-sm);
   border-radius: 16px;
   
   &:hover {
-    transform: translateY(-1px);
+    box-shadow: var(--neu-shadow-xs);
+    transform: translateY(2px);
     
     &::before,
     &::after {
@@ -164,8 +165,8 @@
 }
 
 .message-bubble-mine {
-  background: var(--accent-color);
-  color: var(--secondary-bg);
+  background: var(--neu-message);
+  color: var(--text-dark);
   border-bottom-right-radius: 8px;
   
   &::before {
@@ -175,7 +176,7 @@
     right: -8px;
     width: 0;
     height: 0;
-    border-left: 12px solid var(--accent-color);
+    border-left: 12px solid var(--neu-message);
     border-top: 12px solid transparent;
     border-bottom: 12px solid transparent;
     z-index: 1;
@@ -565,7 +566,7 @@
   }
   
   .chat-messages {
-    padding: var(--spacing-sm);
+    padding: var(--spacing-xs) 0;
     -webkit-overflow-scrolling: touch;
   }
   
@@ -584,9 +585,9 @@
   }
   
   .other-avatar {
-    width: var(--spacing-2xl);
-    height: var(--spacing-2xl);
-    font-size: var(--font-size-md);
+    width: var(--spacing-lg);
+    height: var(--spacing-lg);
+    font-size: var(--font-size-sm);
   }
   
   .sender-name {
@@ -596,7 +597,7 @@
   .message-bubble {
     max-width: 280px;
     font-size: var(--font-size-sm);
-    padding: var(--spacing-md);
+    padding: var(--spacing-sm);
     
     &.message-bubble-mine::before {
       border-left-width: 10px;
@@ -625,6 +626,10 @@
       border-bottom-width: 8px;
       left: -5px;
     }
+  }
+
+  .message-text {
+    font-size: var(--font-size-sm);
   }
 
   .chat-menu-items {
