@@ -1,66 +1,160 @@
-// カラーパレット
+/* ============================
+ * ニューモーフィズム カラーパレット
+ * ============================ */
 :root {
-  --primary-bg: #e3e7ec;      /* メインの背景色 */
-  --secondary-bg: #e3e7ec;     /* カードの背景色 */
-  --accent-color: #667eea;     /* アクセントカラー */
-  --accent-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --text-primary: #2c3e50;     /* メインテキスト */
-  --text-secondary: #7f8c8d;   /* サブテキスト */
-  --text-light: #bdc3c7;       /* 薄いテキスト */
-  --text-danger: #dc2626;      /* 危険なテキスト */
-  --text-warning: #d97706;     /* 警告テキスト */
-  --color-success: #22c55e;    /* 成功色 */
-  --color-danger: #ef4444;     /* 危険色 */
-  --color-warning: #eab308;    /* 警告色 */
-  --shadow-light: #ffffff;     /* ライトシャドウ */
-  --shadow-dark: #c8d0e0;      /* ダークシャドウ */
+  /* ベースカラー */
+  --neu-base: #e0e5ec;           /* ベース背景色 (224, 229, 236) */
+  --neu-surface: #e0e5ec;        /* サーフェス色 */
+  
+  /* シャドウカラー */
+  --neu-shadow-dark: #a3b1c6;   /* ダークシャドウ (163, 177, 198) */
+  --neu-shadow-light: #ffffff;  /* ライトシャドウ (255, 255, 255) */
+  
+  /* テキストカラー */
+  --neu-text-dark: #1a1b1f;     /* ダークテキスト (26, 27, 31) */
+  --neu-text-light: #7b8291;    /* ライトテキスト (123, 130, 145) */
+  
+  /* アクセントカラー */
+  --neu-accent: #61dafb;        /* アクセント (97, 218, 251) */
+  --neu-message: #4ce484;        /* アクセント (97, 233, 147) */
+  --neu-accent-gradient: linear-gradient(135deg, #61dafb 0%, #4fa8d8 100%);
+  
+  /* システムカラー */
+  --color-success: #22c55e;     /* 成功色 */
+  --color-danger: #ef4444;      /* 危険色 */
+  --color-warning: #eab308;     /* 警告色 */
+  
+  /* 後方互換性 */
+  --primary-bg: var(--neu-base);
+  --secondary-bg: var(--neu-base);
+  --accent-color: var(--neu-accent);
+  --accent-gradient: var(--neu-accent-gradient);
+  --text-primary: var(--neu-text-dark);
+  --text-secondary: var(--neu-text-light);
+  --text-light: var(--neu-text-light);
+  --text-danger: var(--color-danger);
+  --text-warning: var(--color-warning);
+  --shadow-light: var(--neu-shadow-light);
+  --shadow-dark: var(--neu-shadow-dark);
 }
 
-// ニューモーフィズムシャドウ
+/* ============================
+ * ニューモーフィズム 3Dエフェクト
+ * ============================ */
 :root {
-  --neu-shadow-xs: 3px 3px 8px var(--shadow-dark), -2px -2px 6px var(--shadow-light);
-  --neu-shadow-sm: 5px 5px 10px var(--shadow-dark), -5px -5px 10px var(--shadow-light);
-  --neu-shadow-md: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
-  --neu-inset-focus: inset 2px 2px 4px var(--shadow-dark), inset -2px -2px 4px var(--shadow-light);
-  --neu-inset-xs: inset 3px 3px 8px var(--shadow-dark), inset -2px -2px 8px var(--shadow-light);
-  --neu-inset-sm: inset 5px 5px 10px var(--shadow-dark), inset -5px -5px 10px var(--shadow-light);
-  --neu-inset-md: inset 8px 8px 16px var(--shadow-dark), inset -8px -8px 16px var(--shadow-light);
+  /* ボタンエフェクト */
+  --neu-button-raised: 6px 6px 12px var(--neu-shadow-dark), -6px -6px 12px var(--neu-shadow-light);
+  --neu-button-pressed: inset 4px 4px 8px var(--neu-shadow-dark), inset -4px -4px 8px var(--neu-shadow-light);
+  --neu-button-hover: 8px 8px 16px var(--neu-shadow-dark), -8px -8px 16px var(--neu-shadow-light);
+  
+  /* カードエフェクト */
+  --neu-card-subtle: 4px 4px 10px var(--neu-shadow-dark), -2px -2px 8px var(--neu-shadow-light);
+  --neu-card-elevated: 8px 8px 20px var(--neu-shadow-dark), -4px -4px 12px var(--neu-shadow-light);
+  --neu-card-floating: 12px 12px 24px var(--neu-shadow-dark), -6px -6px 16px var(--neu-shadow-light);
+  
+  /* トグルエフェクト */
+  --neu-toggle-off: inset 3px 3px 6px var(--neu-shadow-dark), inset -2px -2px 4px var(--neu-shadow-light);
+  --neu-toggle-on: 2px 2px 6px var(--neu-shadow-dark), -2px -2px 6px var(--neu-shadow-light);
+  
+  /* スライダーエフェクト */
+  --neu-slider-track: inset 2px 2px 6px var(--neu-shadow-dark), inset -1px -1px 4px var(--neu-shadow-light);
+  --neu-slider-thumb: 4px 4px 8px var(--neu-shadow-dark), -3px -3px 6px var(--neu-shadow-light);
+  --neu-slider-thumb-active: 2px 2px 6px var(--neu-shadow-dark), -2px -2px 4px var(--neu-shadow-light);
+  
+  /* インプットエフェクト */
+  --neu-input-default: inset 2px 2px 6px var(--neu-shadow-dark), inset -1px -1px 4px var(--neu-shadow-light);
+  --neu-input-focus: inset 3px 3px 8px var(--neu-shadow-dark), inset -2px -2px 6px var(--neu-shadow-light), 0 0 0 2px var(--neu-accent);
+  
+  /* 後方互換性 */
+  --neu-shadow-xs: var(--neu-card-subtle);
+  --neu-shadow-sm: var(--neu-button-raised);
+  --neu-shadow-md: var(--neu-card-elevated);
+  --neu-inset-focus: var(--neu-input-focus);
+  --neu-inset-xs: var(--neu-input-default);
+  --neu-inset-sm: var(--neu-toggle-off);
+  --neu-inset-md: var(--neu-button-pressed);
 }
 
-// スペーシングシステム
+/* ============================
+ * ニューモーフィズム スペーシングシステム
+ * ============================ */
 :root {
-  --spacing-xs: 4px;    /* 8px (タブレット+) */
-  --spacing-sm: 8px;    /* 12px (タブレット+) */
-  --spacing-md: 12px;   /* 16px (タブレット+) */
-  --spacing-lg: 16px;   /* 24px (タブレット+) */
-  --spacing-xl: 24px;   /* 32px (タブレット+) */
-  --spacing-2xl: 32px;  /* 48px (タブレット+) */
+  --neu-spacing-xs: 8px;     /* 最小間隔 */
+  --neu-spacing-sm: 12px;    /* 小間隔 */
+  --neu-spacing-md: 20px;    /* 標準間隔（最小推奨） */
+  --neu-spacing-lg: 24px;    /* 大間隔 */
+  --neu-spacing-xl: 32px;    /* 特大間隔 */
+  --neu-spacing-2xl: 48px;   /* 最大間隔 */
+  
+  /* 後方互換性 */
+  --spacing-xs: var(--neu-spacing-xs);
+  --spacing-sm: var(--neu-spacing-sm);
+  --spacing-md: var(--neu-spacing-md);
+  --spacing-lg: var(--neu-spacing-lg);
+  --spacing-xl: var(--neu-spacing-xl);
+  --spacing-2xl: var(--neu-spacing-2xl);
 }
 
-// レスポンシブブレークポイント
+/* ============================
+ * レスポンシブブレークポイント
+ * ============================ */
 $mobile: 767px;
 $tablet: 768px;
 $desktop: 1024px;
 
-// トランジション
+/* ============================
+ * ニューモーフィズム トランジション
+ * ============================ */
 :root {
-  --transition-fast: 0.15s ease-out;    /* ボタンクリック */
-  --transition-normal: 0.25s ease-out;  /* ホバー効果 */
-  --transition-slow: 0.35s ease-out;    /* モーダル表示 */
+  /* 基本トランジション */
+  --neu-transition-fast: 0.12s cubic-bezier(0.4, 0, 0.2, 1);     /* ボタンプレス */
+  --neu-transition-normal: 0.2s cubic-bezier(0.4, 0, 0.2, 1);    /* ホバー効果 */
+  --neu-transition-slow: 0.3s cubic-bezier(0.4, 0, 0.2, 1);      /* モーダル表示 */
+  
+  /* 専用トランジション */
+  --neu-transition-button: box-shadow 0.12s cubic-bezier(0.4, 0, 0.2, 1), transform 0.12s cubic-bezier(0.4, 0, 0.2, 1);
+  --neu-transition-card: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --neu-transition-input: box-shadow 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* 後方互換性 */
+  --transition-fast: var(--neu-transition-fast);
+  --transition-normal: var(--neu-transition-normal);
+  --transition-slow: var(--neu-transition-slow);
 }
 
-// フォント設定
+/* ============================
+ * ニューモーフィズム 角の丸みとフォント
+ * ============================ */
 :root {
-  --font-size-xs: 10px;
-  --font-size-sm: 14px;
-  --font-size-md: 16px;
-  --font-size-lg: 18px;
-  --font-size-xl: 20px;
-  --font-size-2xl: 24px;
-  --font-size-3xl: 28px;
+  /* 角の丸み（12-16px推奨） */
+  --neu-radius-sm: 12px;     /* 小さな要素 */
+  --neu-radius-md: 14px;     /* 標準要素 */
+  --neu-radius-lg: 16px;     /* 大きな要素 */
+  --neu-radius-xl: 20px;     /* 特大要素 */
+  --neu-radius-full: 50%;    /* 円形 */
+  
+  /* フォントサイズ */
+  --neu-font-xs: 10px;       /* 極小テキスト */
+  --neu-font-sm: 14px;       /* 小テキスト */
+  --neu-font-md: 16px;       /* 標準テキスト */
+  --neu-font-lg: 18px;       /* 大テキスト */
+  --neu-font-xl: 20px;       /* 特大テキスト */
+  --neu-font-2xl: 24px;      /* 見出し小 */
+  --neu-font-3xl: 28px;      /* 見出し大 */
+  
+  /* 後方互換性 */
+  --font-size-xs: var(--neu-font-xs);
+  --font-size-sm: var(--neu-font-sm);
+  --font-size-md: var(--neu-font-md);
+  --font-size-lg: var(--neu-font-lg);
+  --font-size-xl: var(--neu-font-xl);
+  --font-size-2xl: var(--neu-font-2xl);
+  --font-size-3xl: var(--neu-font-3xl);
 }
 
-// Z-index
+/* ============================
+ * Z-index
+ * ============================ */
 :root {
   --z-modal-backdrop: 1000;
   --z-modal: 1001;
@@ -68,19 +162,108 @@ $desktop: 1024px;
   --z-tooltip: 1002;
 }
 
-// タブレット以上でスペーシング調整
+/* ============================
+ * ニューモーフィズム レスポンシブ調整
+ * ============================ */
 @media (min-width: $tablet) {
   :root {
-    --spacing-xs: 8px;
-    --spacing-sm: 12px;
-    --spacing-md: 16px;
-    --spacing-lg: 24px;
-    --spacing-xl: 32px;
-    --spacing-2xl: 48px;
+    /* タブレット以上でスペーシング拡張 */
+    --neu-spacing-xs: 12px;
+    --neu-spacing-sm: 16px;
+    --neu-spacing-md: 24px;    /* タブレットでも最小20px以上維持 */
+    --neu-spacing-lg: 32px;
+    --neu-spacing-xl: 40px;
+    --neu-spacing-2xl: 56px;
+    
+    /* シャドウ強化 */
+    --neu-button-raised: 8px 8px 16px var(--neu-shadow-dark), -8px -8px 16px var(--neu-shadow-light);
+    --neu-card-elevated: 12px 12px 24px var(--neu-shadow-dark), -6px -6px 16px var(--neu-shadow-light);
+    --neu-card-floating: 16px 16px 32px var(--neu-shadow-dark), -8px -8px 20px var(--neu-shadow-light);
   }
 }
 
-// ユーティリティクラス
+@media (min-width: $desktop) {
+  :root {
+    /* デスクトップでさらなるシャドウ強化 */
+    --neu-button-hover: 12px 12px 24px var(--neu-shadow-dark), -12px -12px 24px var(--neu-shadow-light);
+    --neu-card-floating: 20px 20px 40px var(--neu-shadow-dark), -10px -10px 24px var(--neu-shadow-light);
+  }
+}
+
+/* ============================
+ * ニューモーフィズム グラデーションとアイコン
+ * ============================ */
+:root {
+  /* 微妙なグラデーション */
+  --neu-gradient-subtle: linear-gradient(145deg, #e6ebf2 0%, #dae0e8 100%);
+  --neu-gradient-surface: linear-gradient(145deg, #e3e8ef 0%, #dde3ea 100%);
+  --neu-gradient-pressed: linear-gradient(145deg, #d5dae2 0%, #e0e5ec 100%);
+  
+  /* アクセントグラデーション */
+  --neu-accent-subtle: linear-gradient(145deg, #61dafb 0%, #4fa8d8 50%, #3d8bba 100%);
+  --neu-accent-hover: linear-gradient(145deg, #4fa8d8 0%, #61dafb 50%, #73e2fc 100%);
+  
+  /* SVGアイコン設定（線の太さ2px） */
+  --neu-icon-stroke: 2px;
+  --neu-icon-color: var(--neu-text-light);
+  --neu-icon-active: var(--neu-accent);
+  --neu-icon-size-sm: 16px;
+  --neu-icon-size-md: 20px;
+  --neu-icon-size-lg: 24px;
+}
+
+/* ============================
+ * ニューモーフィズム ベースミックスイン
+ * ============================ */
+@mixin neu-surface {
+  background: var(--neu-base);
+  background-image: var(--neu-gradient-subtle);
+  border-radius: var(--neu-radius-md);
+  box-shadow: var(--neu-card-subtle);
+  transition: var(--neu-transition-card);
+}
+
+@mixin neu-button {
+  background: var(--neu-base);
+  background-image: var(--neu-gradient-surface);
+  border: none;
+  border-radius: var(--neu-radius-sm);
+  box-shadow: var(--neu-button-raised);
+  color: var(--neu-text-dark);
+  cursor: pointer;
+  padding: var(--neu-spacing-sm) var(--neu-spacing-md);
+  transition: var(--neu-transition-button);
+  
+  &:hover {
+    box-shadow: var(--neu-button-hover);
+    transform: translateY(-1px);
+  }
+  
+  &:active {
+    background-image: var(--neu-gradient-pressed);
+    box-shadow: var(--neu-button-pressed);
+    transform: translateY(0);
+  }
+}
+
+@mixin neu-input {
+  background: var(--neu-base);
+  border: none;
+  border-radius: var(--neu-radius-sm);
+  box-shadow: var(--neu-input-default);
+  color: var(--neu-text-dark);
+  padding: var(--neu-spacing-sm) var(--neu-spacing-md);
+  transition: var(--neu-transition-input);
+  
+  &:focus {
+    box-shadow: var(--neu-input-focus);
+    outline: none;
+  }
+}
+
+/* ============================
+ * ユーティリティクラス
+ * ============================ */
 .text-danger {
   color: var(--text-danger);
 }
