@@ -19,18 +19,19 @@
   margin-top: var(--spacing-xs);
   display: inline-flex;
   width: fit-content;
+  gap: var(--spacing-xs);
 }
 
 .tab-button {
   display: flex;
   align-items: center;
   gap: var(--spacing-xs);
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: var(--spacing-xs);
   border: none;
   background: var(--secondary-bg);
   color: var(--text-secondary);
   font-size: var(--font-size-sm);
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all var(--transition-fast);
   border-radius: 8px;
@@ -139,11 +140,12 @@
 
 .member-joined {
   font-size: var(--font-size-xs);
-  color: var(--text-light);
+  color: var(--text-secondary);
 }
 
 .member-actions {
   display: flex;
+  flex-direction: column;
   gap: var(--spacing-md);
   align-items: center;
 }
@@ -152,28 +154,6 @@
   min-width: 100px;
   padding: var(--spacing-xs) var(--spacing-sm);
   font-size: var(--font-size-sm);
-}
-
-.danger-btn {
-  padding: var(--spacing-xs);
-  min-width: auto;
-  width: var(--spacing-xl);
-  height: var(--spacing-xl);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--neu-shadow-sm);
-  
-  &:hover {
-    box-shadow: var(--neu-inset-sm);
-    transform: translateY(1px);
-  }
-  
-  &:active {
-    box-shadow: var(--neu-inset-md);
-    transform: translateY(2px);
-  }
 }
 
 .confirm-danger-btn {
@@ -200,19 +180,21 @@
   background: var(--secondary-bg);
   box-shadow: var(--neu-inset-sm);
   border-radius: 8px;
-  padding: var(--spacing-md);
+  padding: var(--spacing-sm);
 }
 
 .confirmation-message {
   color: var(--text-danger);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-md);
+  font-weight: 600;
   margin-bottom: var(--spacing-sm);
+  text-align: center;
 }
 
 .confirmation-actions {
   display: flex;
   gap: var(--spacing-lg);
-  justify-content: flex-end;
+  justify-content: center;
   margin-bottom: var(--spacing-xs);
 }
 
@@ -222,9 +204,15 @@
   font-size: var(--font-size-sm);
   border-radius: 6px;
   background: var(--secondary-bg);
-  
+  transition: all var(--transition-normal);
+
   &:hover {
-    box-shadow: var(--neu-inset-sm);
+    box-shadow: var(--neu-shadow-xs);
+    transform: translateY(2px);
+  }
+
+  &:active {
+    box-shadow: var(--neu-inset-md);
   }
 }
 
@@ -239,7 +227,7 @@
   font-size: var(--font-size-lg);
   font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: var(--spacing-md);
+  margin: var(--spacing-md) auto;
 }
 
 .invite-card {
@@ -333,7 +321,7 @@
   font-size: var(--font-size-lg);
   font-weight: 600;
   color: var(--text-primary);
-  margin-bottom: var(--spacing-md);
+  margin: var(--spacing-md) auto;
 }
 
 .settings-form {
@@ -414,7 +402,7 @@
 
   &:hover {
     color: var(--text-danger);
-    box-shadow: var(--neu-inset-sm);
+    box-shadow: var(--neu-shadow-xs);
     transform: translateY(1px);
   }
   
@@ -452,28 +440,36 @@
 /* ============================
  * ボタンバリエーション
  * ============================ */
-.neu-button.danger-btn {
+ .danger-btn {
+  padding: var(--spacing-xs);
+  min-width: auto;
+  margin-left: auto;
   color: var(--text-danger);
+  width: var(--spacing-xl);
+  height: var(--spacing-xl);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--neu-shadow-sm);
   
   &:hover {
-    color: var(--text-danger);
-    box-shadow: var(--neu-inset-sm);
+    box-shadow: var(--neu-shadow-xs);
     transform: translateY(1px);
   }
   
   &:active {
-    color: var(--text-danger);
     box-shadow: var(--neu-inset-md);
     transform: translateY(2px);
   }
 }
 
-.neu-button.warning-btn {
+.warning-btn {
   color: var(--text-warning);
   
   &:hover {
     color: var(--text-warning);
-    box-shadow: var(--neu-inset-sm);
+    box-shadow: var(--neu-shadow-xs);
     transform: translateY(1px);
   }
   
@@ -507,44 +503,58 @@
 @media (max-width: 767px) {
   /* グループ管理ビューの調整 */
   .group-management-view {
-    padding: 0 var(--spacing-sm);
+    padding: 0;
   }
   
   /* タブナビゲーションの調整 */
   .tab-button {
     padding: var(--spacing-sm);
     font-size: 12px;
-    margin: var(--spacing-xs);
     
     span {
       display: none;
     }
   }
 
-  /* メンバータブの調整 */
-  .member-actions {
-    flex-direction: row;
-    gap: var(--spacing-sm);
-    align-items: center;
-    align-self: flex-start;
-    
-    .role-select {
-      min-width: 80px;
-      font-size: 12px;
+  /* ユーザーアイコン */
+  .member-avatar {
+    .avatar-circle {
+      width: 35px;
+      height: 35px;
     }
   }
 
+  /* メンバータブの調整 */
+  .member-actions {
+    gap: var(--spacing-sm);
+    align-self: flex-end;
+    
+    .role-select {
+      min-width: 85px;
+      font-size: 10px;
+    }
+  }
+  
   .danger-btn {
     width: 24px;
     height: 24px;
+    margin-left: auto;
     min-height: auto;
+  }
+
+  .confirmation-message {
+    font-size: 12px;
+  }
+
+  .confirmation-actions {
+    margin: 0;
   }
 
   /* 削除確認ボタンの調整 */
   .confirmation-button {
     font-size: var(--font-size-xs);
-    min-height: var(--spacing-2xl);
-    padding: 0 var(--spacing-xs);
+    min-height: var(--spacing-xl);
+    padding: 0 var(--spacing-sm);
   }
 
   /* 招待フォームの調整 */

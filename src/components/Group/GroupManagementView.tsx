@@ -121,29 +121,27 @@ export const GroupManagementView: React.FC<GroupManagementViewProps> = ({
     <div className="group-management-view">
       {/* タブナビゲーション */}
       <div className="tab-navigation">
-        <div className="flex">
-          <button
-            onClick={() => setActiveTab('members')}
-            className={`tab-button ${activeTab === 'members' ? 'active' : ''}`}
-          >
-            <Users size={18} />
-            <span>メンバー</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('invite')}
-            className={`tab-button ${activeTab === 'invite' ? 'active' : ''}`}
-          >
-            <UserPlus size={18} />
-            <span>招待</span>
-          </button>
-          <button
-            onClick={() => setActiveTab('settings')}
-            className={`tab-button ${activeTab === 'settings' ? 'active' : ''}`}
-          >
-            <Settings size={18} />
-            <span>設定</span>
-          </button>
-        </div>
+        <button
+          onClick={() => setActiveTab('members')}
+          className={`tab-button ${activeTab === 'members' ? 'active' : ''}`}
+        >
+          <Users size={18} />
+          <span>メンバー</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('invite')}
+          className={`tab-button ${activeTab === 'invite' ? 'active' : ''}`}
+        >
+          <UserPlus size={18} />
+          <span>招待</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('settings')}
+          className={`tab-button ${activeTab === 'settings' ? 'active' : ''}`}
+        >
+          <Settings size={18} />
+          <span>設定</span>
+        </button>
       </div>
 
       {/* メンバータブ */}
@@ -186,6 +184,12 @@ export const GroupManagementView: React.FC<GroupManagementViewProps> = ({
                   {/* アクション */}
                   {member.role !== 'owner' && (
                     <div className="member-actions">
+                      <button
+                        onClick={() => handleShowDeleteConfirm(member.id)}
+                        className="neu-button danger-btn"
+                      >
+                        <X size={14} />
+                      </button>
                       <select
                         value={member.role}
                         onChange={(e) => handleRoleChange(member.id, e.target.value as 'admin' | 'member')}
@@ -194,12 +198,6 @@ export const GroupManagementView: React.FC<GroupManagementViewProps> = ({
                         <option value="member">メンバー</option>
                         <option value="admin">管理者</option>
                       </select>
-                      <button
-                        onClick={() => handleShowDeleteConfirm(member.id)}
-                        className="neu-button danger-btn"
-                      >
-                        <X size={14} />
-                      </button>
                     </div>
                   )}
                   {member.role === 'owner' && (
